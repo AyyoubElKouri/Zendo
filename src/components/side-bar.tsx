@@ -58,16 +58,15 @@ function SideBarItem({ route }: { route: Route }) {
    return (
       <button
          type='button'
-         key={route.label}
-         aria-current='page'
+         aria-current={currentPath === route.path ? 'page' : undefined}
          onClick={() => router.push(route.path)}
          className={clsx(
             'w-full h-9 flex justify-start items-center gap-2 px-2 rounded-md transition-colors',
             'text-gray-600 duration-200 ease-in-out',
-            currentPath.includes(route.path) ? 'bg-green-300' : 'hover:bg-green-200',
+            currentPath === route.path ? 'bg-green-300' : 'hover:bg-green-200',
          )}
       >
-         <Image src={route.icon} alt='Icon for Tasks route' width={20} height={20} />
+         <Image src={route.icon} alt={`${route.label} icon`} width={20} height={20} />
          {route.label}
       </button>
    );
