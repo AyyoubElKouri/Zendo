@@ -63,7 +63,7 @@ function SideBarItem({ route }: { route: Route }) {
          onClick={() => router.push(route.path)}
          className={clsx(
             'w-full h-9 flex justify-start items-center gap-2 px-2 rounded-md transition-colors',
-            'duration-200 ease-in-out',
+            'text-gray-600 duration-200 ease-in-out',
             currentPath.includes(route.path) ? 'bg-green-300' : 'hover:bg-green-200',
          )}
       >
