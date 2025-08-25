@@ -1,22 +1,41 @@
 /*--------------------------------------------------------------------------------------------------
- *                    Copyright (c) Ayyoub EL Kouri. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *                       Copyright (c) Ayyoub EL Kouri. All rights reserved
+ *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
-
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 
 import SideBar from '@/components/side-bar';
 import './globals.css';
 
-const geistSans = Geist({
-   variable: '--font-geist-sans',
-   subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-   variable: '--font-geist-mono',
-   subsets: ['latin'],
+const Laila = localFont({
+   src: [
+      {
+         path: '../../public/Laila/Laila-Regular.ttf',
+         weight: '400',
+         style: 'normal',
+      },
+      {
+         path: '../../public/Laila/Laila-Light.ttf',
+         weight: '300',
+         style: 'normal',
+      },
+      {
+         path: '../../public/Laila/Laila-Medium.ttf',
+         weight: '500',
+         style: 'normal',
+      },
+      {
+         path: '../../public/Laila/Laila-SemiBold.ttf',
+         weight: '600',
+         style: 'normal',
+      },
+      {
+         path: '../../public/Laila/Laila-Bold.ttf',
+         weight: '700',
+         style: 'normal',
+      },
+   ],
 });
 
 export const metadata: Metadata = {
@@ -31,7 +50,7 @@ export default function RootLayout({
 }>) {
    return (
       <html lang='en'>
-         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+         <body className={Laila.className}>
             <div className='flex'>
                <SideBar />
                {children}
