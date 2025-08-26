@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------------------------------------
- *                    Copyright (c) Ayyoub EL Kouri. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *                       Copyright (c) Ayyoub EL Kouri. All rights reserved
+ *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
 export default function Tasks() {

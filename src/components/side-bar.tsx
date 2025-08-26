@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------------------------------------
- *                    Copyright (c) Ayyoub EL Kouri. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *                       Copyright (c) Ayyoub EL Kouri. All rights reserved
+ *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
 'use client';
@@ -40,7 +40,10 @@ export default function SideBar() {
             ))}
          </nav>
 
-         <footer className='w-full h-15 border-t-1 flex justify-center items-center border-gray-300'>
+         <footer
+            className='w-full h-15 border-t-1 flex justify-center items-center
+                     border-gray-300'
+         >
             <p className='text-xs text-gray-500 text-center'>
                Copyright (c) Ayyoub EL Kouri
                <br />
@@ -71,3 +74,4 @@ function SideBarItem({ route }: { route: Route }) {
       </button>
    );
 }
+
