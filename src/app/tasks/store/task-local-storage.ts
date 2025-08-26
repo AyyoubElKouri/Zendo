@@ -6,7 +6,7 @@
 import type { Task } from "../types/entities";
 
 
-const STORAGE_KEY = "tasks";
+const STORAGE_KEY = "__tasks__key__";
 
 // Utility functions -------------------------------------------------------------------------------
 const isLocalStorageAvailable = (): boolean => {
