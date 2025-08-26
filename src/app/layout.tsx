@@ -6,7 +6,6 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
-import SideBar from '@/components/side-bar';
 import './globals.css';
 
 const Laila = localFont({
@@ -52,10 +51,7 @@ export default function RootLayout({
    return (
       <html lang='en'>
          <body className={Laila.className}>
-            <div className='flex'>
-               <SideBar />
-               {children}
-            </div>
+            <div className='flex'>{children}</div>
          </body>
       </html>
    );
