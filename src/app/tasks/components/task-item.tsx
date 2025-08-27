@@ -68,9 +68,9 @@ export default function TaskItem({ task }: { task: Task }) {
 
    return (
       <div
-         className='w-full min-h-[64px] rounded-xl bg-[#F3F3F3] dark:bg-[#050404] border-1
+         className='w-full min-h-[50px] rounded-xl bg-[#F3F3F3] dark:bg-[#050404] border-1
                       border-black/30 dark:border-white/10 relative grid
-                      grid-cols-[46px_46px_222px_1fr_154px]'
+                      grid-cols-[36px_36px_222px_1fr_130px]'
       >
          {/* Delete task button */}
          <button
@@ -82,7 +82,7 @@ export default function TaskItem({ task }: { task: Task }) {
                'border-r border-black/30 dark:border-white/10',
             )}
          >
-            <Image src='/icons/delete.svg' alt='delete icon' width={30} height={30} />
+            <Image src='/icons/delete.svg' alt='delete icon' width={25} height={25} />
          </button>
 
          {/* Duplicate task button */}
@@ -95,7 +95,7 @@ export default function TaskItem({ task }: { task: Task }) {
                'border-r border-black/30 dark:border-white/10',
             )}
          >
-            <Image src='/icons/copy.svg' alt='copy icon' width={25} height={25} />
+            <Image src='/icons/copy.svg' alt='copy icon' width={20} height={20} />
          </button>
 
          {/* Editable source field */}
@@ -105,7 +105,7 @@ export default function TaskItem({ task }: { task: Task }) {
          <TaskField task={task} type='description' />
 
          {/* Task completion toggle button */}
-         <div className='w-full h-full flex justify-center items-center p-[15px]'>
+         <div className='w-full h-full flex justify-center items-center p-[10px]'>
             <Button variant={task.completed ? 'finished' : 'pending'} onClick={toggleTask}>
                {task.completed ? 'Finished' : 'Pending'}
             </Button>
