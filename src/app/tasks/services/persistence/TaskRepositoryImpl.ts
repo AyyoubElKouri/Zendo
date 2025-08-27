@@ -6,8 +6,8 @@
 import { z } from "zod";
 import type { Task } from "../../types/entities";
 import type TaskRepository from "./TaskRepository";
-import TaskException from "../../exceptions/TaskException";
-import RepositoryException from "../../exceptions/RepositoryException";
+import TaskException from "../exceptions/TaskException";
+import RepositoryException from "../exceptions/RepositoryException";
 
 class TaskRepositoryImpl implements TaskRepository {
    private readonly STORAGE_KEY_TASKS = '__tasks__key__';
