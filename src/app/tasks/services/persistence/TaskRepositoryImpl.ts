@@ -13,9 +13,18 @@ class TaskRepositoryImpl implements TaskRepository {
    private readonly STORAGE_KEY_TASKS = '__tasks__key__';
 
    private static readonly AddTaskSchema = z.object({
-      id: z.number('ID must be a number').int('ID must be an integer').positive('ID must be positive'),
-      source: z.string().min(2, 'Source must be at least 2 characters').max(20, 'Source must not exceed 20 characters'),
-      description: z.string().min(1, "Description cannot be empty").max(200, 'Description must not exceed 200 characters'),
+      id: z.number('ID must be a number')
+         .int('ID must be an integer')
+         .positive('ID must be positive'),
+
+      source: z.string()
+         .min(2, 'Source must be at least 2 characters')
+         .max(20, 'Source must not exceed 20 characters'),
+
+      description: z.string()
+         .min(1, "Description cannot be empty")
+         .max(200, 'Description must not exceed 200 characters'),
+
       completed: z.boolean()
    });
 
