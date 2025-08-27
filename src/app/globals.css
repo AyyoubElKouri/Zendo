@@ -125,3 +125,23 @@
       @apply bg-[#090808] text-foreground;
    }
 }
+
+/* === Task List === */
+
+/* Task List Scroll Bar - Light Mode */
+.task-list::-webkit-scrollbar {
+   @apply bg-[#FDB976] w-[5px] rounded-full;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+   @apply bg-[#FF7F00] rounded-full;
+}
+
+/* Task List Scroll Bar - Dark Mode */
+.dark .task-list::-webkit-scrollbar {
+   @apply bg-[#321900];
+}
+
+.dark .task-list::-webkit-scrollbar-thumb {
+   @apply bg-[#D03F00];
+}
