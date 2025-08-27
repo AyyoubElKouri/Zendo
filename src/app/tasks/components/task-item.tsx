@@ -68,8 +68,8 @@ export default function TaskItem({ task }: { task: Task }) {
 
    return (
       <div
-         className='w-full h-16 rounded-xl bg-[#F3F3F3] dark:bg-[#050404] border 
-                      border-black/10 dark:border-white/10 relative grid
+         className='w-full min-h-[64px] rounded-xl bg-[#F3F3F3] dark:bg-[#050404] border-1
+                      border-black/30 dark:border-white/10 relative grid
                       grid-cols-[46px_46px_222px_1fr_154px]'
       >
          {/* Delete task button */}
@@ -79,7 +79,7 @@ export default function TaskItem({ task }: { task: Task }) {
             className={clsx(
                'w-full h-full bg-transparent flex justify-center items-center',
                'hover:bg-[#e9e9e9] hover:rounded-l-xl dark:hover:bg-[#292323]',
-               'border-r border-black/10 dark:border-white/10',
+               'border-r border-black/30 dark:border-white/10',
             )}
          >
             <Image src='/icons/delete.svg' alt='delete icon' width={30} height={30} />
@@ -92,7 +92,7 @@ export default function TaskItem({ task }: { task: Task }) {
             className={clsx(
                'w-full h-full bg-transparent flex justify-center items-center',
                'hover:bg-[#e9e9e9] dark:hover:bg-[#292323]',
-               'border-r border-black/10 dark:border-white/10',
+               'border-r border-black/30 dark:border-white/10',
             )}
          >
             <Image src='/icons/copy.svg' alt='copy icon' width={25} height={25} />

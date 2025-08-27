@@ -71,7 +71,7 @@ export default function TaskField({ task, type }: TaskFieldProps) {
       <div
          className={clsx(
             'w-full h-full flex justify-start items-center',
-            'border-r border-black/10 dark:border-white/10',
+            'border-r border-black/30 dark:border-white/10',
             isEditMode ? 'px-[9px]' : 'px-[20px]',
             type === 'source'
                ? 'text-[20px] font-medium text-[#2A2929] dark:text-white'
