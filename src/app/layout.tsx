@@ -8,34 +8,10 @@ import localFont from 'next/font/local';
 
 import './globals.css';
 
-const Laila = localFont({
-   src: [
-      {
-         path: '../../public/Laila/Laila-Regular.ttf',
-         weight: '400',
-         style: 'normal',
-      },
-      {
-         path: '../../public/Laila/Laila-Light.ttf',
-         weight: '300',
-         style: 'normal',
-      },
-      {
-         path: '../../public/Laila/Laila-Medium.ttf',
-         weight: '500',
-         style: 'normal',
-      },
-      {
-         path: '../../public/Laila/Laila-SemiBold.ttf',
-         weight: '600',
-         style: 'normal',
-      },
-      {
-         path: '../../public/Laila/Laila-Bold.ttf',
-         weight: '700',
-         style: 'normal',
-      },
-   ],
+import { ThemeProvider } from '@/components/theme-provider';
+
+const Inter = localFont({
+   src: '../../public/fonts/Inter.ttf',
 });
 
 export const metadata: Metadata = {
@@ -49,9 +25,16 @@ export default function RootLayout({
    children: React.ReactNode;
 }>) {
    return (
-      <html lang='en'>
-         <body className={Laila.className}>
-            <div className='flex'>{children}</div>
+      <html lang='en' suppressHydrationWarning>
+         <body className={Inter.className}>
+            <ThemeProvider
+               attribute='class'
+               defaultTheme='system'
+               enableSystem
+               disableTransitionOnChange
+            >
+               <div className='flex'>{children}</div>
+            </ThemeProvider>
          </body>
       </html>
    );
