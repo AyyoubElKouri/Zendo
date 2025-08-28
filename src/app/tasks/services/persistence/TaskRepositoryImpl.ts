@@ -91,7 +91,7 @@ class TaskRepositoryImpl implements TaskRepository {
       }
    }
 
-   public async addTask(task: Task): Promise<Task> {
+   public async addTask(task: Task, position?: number): Promise<Task> {
       // Validate task input
       const results = TaskRepositoryImpl.AddTaskSchema.safeParse(task);
       if (!results.success) {
@@ -107,8 +107,13 @@ class TaskRepositoryImpl implements TaskRepository {
          throw new TaskException(`Task with ID ${validatedTask.id} already exists`);
       }
 
-      // Add task to storage
-      tasks.push(validatedTask);
+      // Add task at the desired position, or push at the end if position is undefined/out of range
+      if (position !== undefined && position >= 0 && position <= tasks.length) {
+         tasks.splice(position, 0, validatedTask);
+      } else {
+         tasks.push(validatedTask);
+      }
+
       await this.saveTasks(tasks);
 
       return validatedTask;

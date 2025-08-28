@@ -17,7 +17,7 @@ export interface Task {
 
    /**
     * Detailed description of the task.
-    * Maximum length of 200 characters.
+    * Maximum length of 80 characters.
     */
    description: string;
 
