@@ -3,10 +3,10 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { useCallback } from "react";
-import type TaskRepository from "../services/persistence/TaskRepository";
-import { useTasksState } from "../store/use-tasks-store";
-import type { Task } from "../types/entities";
+import { useCallback } from 'react';
+import type TaskRepository from '../../services/persistence/TaskRepository';
+import { useTasksState } from '../../store/use-tasks-store';
+import type { Task } from '../../types/entities';
 
 function useTaskItemAdapter(task: Task, repository: TaskRepository) {
    const { moveTask, addTask, updateTask, removeTask: _removeTask } = useTasksState();
@@ -60,13 +60,13 @@ function useTaskItemAdapter(task: Task, repository: TaskRepository) {
       }
    }, [task, repository, addTask, moveTask]);
 
-   const handlers = {
-      toggleTask,
-      removeTask,
-      duplicateTask,
+   return {
+      handlers: {
+         toggleTask,
+         removeTask,
+         duplicateTask,
+      },
    };
-
-   return handlers;
 }
 
 export default useTaskItemAdapter;

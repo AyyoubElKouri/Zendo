@@ -11,14 +11,14 @@ import { useMemo, type ReactNode } from 'react';
 
 import { Button } from '@/components/ui/button';
 
-import type { Task } from '../types/entities';
-import TaskField from './task-field';
-import TaskRepositoryImpl from '../services/persistence/TaskRepositoryImpl';
-import useTaskItemAdapter from '../hooks/useTaskItemAdapter';
+import type { Task } from '../../types/entities';
+import { TaskField } from './TaskField';
+import TaskRepositoryImpl from '../../services/persistence/TaskRepositoryImpl';
+import useTaskItemAdapter from './useTaskItemAdapter';
 
-export default function TaskItem({ task }: { task: Task }) {
+export function TaskItem({ task }: { task: Task }) {
    const repository = useMemo(() => new TaskRepositoryImpl(), []);
-   const handlers = useTaskItemAdapter(task, repository);
+   const { handlers } = useTaskItemAdapter(task, repository);
 
    return (
       <TaskItemContainer>
