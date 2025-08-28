@@ -3,5 +3,5 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-class TaskException extends Error { }
+class TaskException extends Error {}
 export default TaskException;

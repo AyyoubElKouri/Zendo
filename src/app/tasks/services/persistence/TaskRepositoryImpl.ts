@@ -3,29 +3,33 @@
  *     Becoming an expert won't happen overnight, but with a bit of patience, you'll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { z } from "zod";
-import type { Task } from "../../types/entities";
-import type TaskRepository from "./TaskRepository";
-import TaskException from "../exceptions/TaskException";
-import RepositoryException from "../exceptions/RepositoryException";
+import { z } from 'zod';
+
+import type { Task } from '../../types/entities';
+import RepositoryException from '../exceptions/RepositoryException';
+import TaskException from '../exceptions/TaskException';
+import type TaskRepository from './TaskRepository';
 
 class TaskRepositoryImpl implements TaskRepository {
    private readonly STORAGE_KEY_TASKS = '__tasks__key__';
 
    private static readonly AddTaskSchema = z.object({
-      id: z.number('ID must be a number')
+      id: z
+         .number('ID must be a number')
          .int('ID must be an integer')
          .positive('ID must be positive'),
 
-      source: z.string()
+      source: z
+         .string()
          .min(2, 'Source must be at least 2 characters')
          .max(20, 'Source must not exceed 20 characters'),
 
-      description: z.string()
-         .min(1, "Description cannot be empty")
+      description: z
+         .string()
+         .min(1, 'Description cannot be empty')
          .max(200, 'Description must not exceed 200 characters'),
 
-      completed: z.boolean()
+      completed: z.boolean(),
    });
 
    private static readonly UpdateTaskSchema = TaskRepositoryImpl.AddTaskSchema.partial();
@@ -99,7 +103,7 @@ class TaskRepositoryImpl implements TaskRepository {
 
       // Check if task with same ID already exists
       const tasks = await this.loadTasks();
-      if (tasks.some(t => t.id === validatedTask.id)) {
+      if (tasks.some((t) => t.id === validatedTask.id)) {
          throw new TaskException(`Task with ID ${validatedTask.id} already exists`);
       }
 
@@ -122,7 +126,7 @@ class TaskRepositoryImpl implements TaskRepository {
       const tasks = await this.loadTasks();
 
       // Find and update the task
-      const taskIndex = tasks.findIndex(task => task.id === id);
+      const taskIndex = tasks.findIndex((task) => task.id === id);
       if (taskIndex === -1) {
          throw new TaskException(`Task with ID ${id} not found`);
       }
@@ -145,7 +149,7 @@ class TaskRepositoryImpl implements TaskRepository {
    public async deleteTask(id: number): Promise<void> {
       const tasks = await this.loadTasks();
 
-      const taskIndex = tasks.findIndex(task => task.id === id);
+      const taskIndex = tasks.findIndex((task) => task.id === id);
       if (taskIndex === -1) {
          throw new TaskException(`Task with ID ${id} not found`);
       }
@@ -160,7 +164,7 @@ class TaskRepositoryImpl implements TaskRepository {
 
    public async findTaskById(id: number): Promise<Task | null> {
       const tasks = await this.loadTasks();
-      const task = tasks.find(task => task.id === id);
+      const task = tasks.find((task) => task.id === id);
       return task ?? null;
    }
 
