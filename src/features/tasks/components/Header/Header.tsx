@@ -4,18 +4,18 @@
  *------------------------------------------------------------------------------------------------*/
 
 export function Header() {
-   const username = 'Ayyoub'; // TODO: This will be dynimaque.
+   const username = 'Ayyoub';
    const date = getFormattedDate();
 
    return (
       <div
-         className='w-full h-[72px] bg-[#DADADA] dark:bg-[#090808] border-b-1 border-black/30
-                  dark:border-white/10 flex flex-col justify-center items-start pl-[38px]'
+         className='w-full h-16 bg-background-2 border-b-1 border-border pl-4
+                    flex flex-col justify-center items-start'
       >
-         <span className='text-[24px] font-medium'>
-            Welcome <span className=' text-[#FF8000] dark:text-[#FF7F00]'>{username}</span>
+         <span className='text-xl font-medium'>
+            Welcome <span className='text-accent'>{username}</span>
          </span>
-         <span className='text-[16px] text-[#515151] dark:text-[#7C7C7C]'>{date}</span>
+         <span className='text-sm text-date'>{date}</span>
       </div>
    );
 }

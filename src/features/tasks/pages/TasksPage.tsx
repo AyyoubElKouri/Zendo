@@ -16,6 +16,8 @@ import { ActionButtons } from '@tasks/components/ActionButtons';
 import { Header } from '@tasks/components/Header';
 import { Footer } from '@tasks/components/Footer';
 
+import '@tasks/styles.css';
+
 export function TasksPage() {
    const { addTask } = useTasksState();
    const repo = useMemo(() => new TaskRepositoryImpl(), []);
@@ -35,7 +37,7 @@ export function TasksPage() {
 
    return (
       <div
-         className='w-full min-h-svh bg-white dark:bg-[#040404] flex flex-col justify-center items-center text-4xl
+         className='w-full min-h-svh bg-background-1 flex flex-col justify-center items-center text-4xl
                   '
       >
          <Header />

@@ -1,0 +1,18 @@
+/*--------------------------------------------------------------------------------------------------
+ *                       Copyright (c) Ayyoub EL Kouri. All rights reserved
+ *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
+ *------------------------------------------------------------------------------------------------*/
+
+@import "tailwindcss";
+
+@theme inline {
+   --color-date: var(--date);
+}
+
+:root {
+   --date: #515151;
+}
+
+.dark {
+   --date: #7c7c7c;
+}
