@@ -12,6 +12,7 @@ import { useTasksState } from '@/store/useTasksState';
 import { TaskList } from '@tasks/components/TaskList';
 import { TaskRepositoryImpl } from '@tasks/services/persistence/TaskRepositoryImpl';
 import { Statistics } from '@tasks/components/Statistics';
+import { ActionButtons } from '../components/ActionButtons';
 
 export function TasksPage() {
    const { addTask } = useTasksState();
@@ -35,10 +36,11 @@ export function TasksPage() {
          className='w-full min-h-svh bg-white dark:bg-[#040404] flex justify-center items-center text-4xl
                   '
       >
-         <div className='w-[1043px] '>
+         <div className='w-[1043px] flex flex-col items-center gap-2 '>
             <ToggleTheme />
             <Statistics />
             <TaskList />
+            <ActionButtons />
          </div>
       </div>
    );

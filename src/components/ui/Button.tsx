@@ -21,6 +21,10 @@ const buttonVariants = cva(
             default: 'bg-primary shadow-xs hover:bg-primary/90',
             pending: 'bg-[#C42D78] dark:bg-[#5C0B33]',
             finished: 'bg-[#4055A8] dark:bg-[#19216C]',
+            createTask:
+               'w-[198px] bg-[#D03F00] text-[20px] text-white font-semibold rounded-[12px]',
+            deleteAll:
+               'w-[198px] bg-transparent text-[20px] font-semibold text-[#3B3B3B] dark:text-[#AEAEAE]',
          },
       },
       defaultVariants: {
