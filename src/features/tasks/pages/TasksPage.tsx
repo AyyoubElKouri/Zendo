@@ -9,8 +9,9 @@ import { ToggleTheme } from '@/components/ToggleTheme';
 
 import { useEffect, useMemo } from 'react';
 import { useTasksState } from '@/store/useTasksState';
-import { TaskList } from '@tasks/components/TaskList/TaskList';
+import { TaskList } from '@tasks/components/TaskList';
 import { TaskRepositoryImpl } from '@tasks/services/persistence/TaskRepositoryImpl';
+import { Statistics } from '@tasks/components/Statistics';
 
 export function TasksPage() {
    const { addTask } = useTasksState();
@@ -31,11 +32,12 @@ export function TasksPage() {
 
    return (
       <div
-         className='w-full min-h-svh bg-white dark:bg-[#090808] flex justify-center items-center text-4xl
+         className='w-full min-h-svh bg-white dark:bg-[#040404] flex justify-center items-center text-4xl
                   '
       >
          <div className='w-[1043px] '>
             <ToggleTheme />
+            <Statistics />
             <TaskList />
          </div>
       </div>
