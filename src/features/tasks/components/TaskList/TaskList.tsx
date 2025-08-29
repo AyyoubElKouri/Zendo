@@ -3,13 +3,13 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { useTasksState } from '../store/use-tasks-store';
-import type { Task } from '../types/entities';
-import TaskItem from './task-item';
+import { useTasksState } from '../../../../store/useTasksState';
+import { Task } from '../../../../types/entities';
+import { TaskItem } from '../TaskItem';
 
-export default function TaskList() {
-   const { find } = useTasksState();
-   const tasks = find();
+export function TaskList() {
+   const { getAllTasks } = useTasksState();
+   const tasks = getAllTasks();
 
    return (
       <div

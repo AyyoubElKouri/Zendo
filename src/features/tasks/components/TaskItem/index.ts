@@ -3,8 +3,4 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { TasksPage } from '@tasks/pages/TasksPage';
-
-export default function Page() {
-   return <TasksPage />;
-}
+export { TaskItem } from './TaskItem';

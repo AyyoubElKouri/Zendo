@@ -3,12 +3,12 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { useCallback, useState } from 'react';
-import type { ChangeEvent, KeyboardEvent } from 'react';
+import { useCallback, useState, ChangeEvent, KeyboardEvent } from 'react';
 
-import type TaskRepository from '../../services/persistence/TaskRepository';
-import type { TaskFieldProps } from './TaskField';
-import { useTasksState } from '../../store/use-tasks-store';
+import { useTasksState } from '@/store/useTasksState';
+
+import { TaskRepository } from '@tasks/services/persistence/TaskRepository';
+import { TaskFieldProps } from '@tasks/components/TaskItem/TaskField';
 
 export function useTaskFieldAdapter({ task, type }: TaskFieldProps, repository: TaskRepository) {
    // States ---

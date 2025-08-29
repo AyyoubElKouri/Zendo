@@ -20,7 +20,7 @@
       "rules": {
          "recommended": true,
          "style": {
-            "useImportType": "error",
+            "useImportType": "off",
             "useExportType": "error"
          },
          "suspicious": {
@@ -40,21 +40,8 @@
       "actions": {
          "source": {
             "organizeImports": {
-               "level": "on",
-               "options": {
-                  "groups": [
-                     ":URL:",
-                     ":NODE:",
-                     ":BLANK_LINE:",
-                     ":PACKAGE:",
-                     ":PACKAGE_WITH_PROTOCOL:",
-                     ":BLANK_LINE:",
-                     ":ALIAS:",
-                     ":BLANK_LINE:",
-                     ":PATH:"
-                  ],
-                  "identifierOrder": "natural"
-               }
+               "level": "off",
+               "options": {}
             }
          }
       }

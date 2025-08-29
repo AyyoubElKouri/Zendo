@@ -8,7 +8,7 @@ import localFont from 'next/font/local';
 
 import './globals.css';
 
-import { ThemeProvider } from '@/components/theme-provider';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 const Inter = localFont({
    src: '../../public/fonts/Inter.ttf',

@@ -4,11 +4,13 @@
  *------------------------------------------------------------------------------------------------*/
 
 import { useCallback } from 'react';
-import type TaskRepository from '../../services/persistence/TaskRepository';
-import { useTasksState } from '../../store/use-tasks-store';
-import type { Task } from '../../types/entities';
 
-function useTaskItemAdapter(task: Task, repository: TaskRepository) {
+import { useTasksState } from '@/store/useTasksState';
+import { Task } from '@/types/entities';
+
+import { TaskRepository } from '@tasks/services/persistence/TaskRepository';
+
+export function useTaskItemAdapter(task: Task, repository: TaskRepository) {
    const { moveTask, addTask, updateTask, removeTask: _removeTask } = useTasksState();
 
    // Toggle task handler
@@ -68,5 +70,3 @@ function useTaskItemAdapter(task: Task, repository: TaskRepository) {
       },
    };
 }
-
-export default useTaskItemAdapter;

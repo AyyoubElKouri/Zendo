@@ -5,16 +5,16 @@
 
 'use client';
 
-import clsx from 'clsx';
+import { useMemo, ReactNode } from 'react';
 import Image from 'next/image';
-import { useMemo, type ReactNode } from 'react';
+import { clsx } from 'clsx';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
+import { Task } from '@/types/entities';
 
-import type { Task } from '../../types/entities';
-import { TaskField } from './TaskField';
-import TaskRepositoryImpl from '../../services/persistence/TaskRepositoryImpl';
-import useTaskItemAdapter from './useTaskItemAdapter';
+import { TaskField } from '@tasks/components/TaskItem/TaskField';
+import { TaskRepositoryImpl } from '@tasks/services/persistence/TaskRepositoryImpl';
+import { useTaskItemAdapter } from '@tasks/components/TaskItem/useTaskItemAdapter';
 
 export function TaskItem({ task }: { task: Task }) {
    const repository = useMemo(() => new TaskRepositoryImpl(), []);

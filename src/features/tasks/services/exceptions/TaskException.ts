@@ -3,5 +3,4 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-class RepositoryException extends Error {}
-export default RepositoryException;
+export class TaskException extends Error {}

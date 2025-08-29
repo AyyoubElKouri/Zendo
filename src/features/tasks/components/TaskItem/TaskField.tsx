@@ -3,18 +3,18 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import clsx from 'clsx';
 import { useMemo } from 'react';
+import { clsx } from 'clsx';
 
-import type { Task } from '../../types/entities';
-import TaskRepositoryImpl from '../../services/persistence/TaskRepositoryImpl';
-import { useTaskFieldAdapter } from './useTaskFieldAdapter';
+import { Task } from '@/types/entities';
+
+import { TaskRepositoryImpl } from '@tasks/services/persistence/TaskRepositoryImpl';
+import { useTaskFieldAdapter } from '@tasks/components/TaskItem/useTaskFieldAdapter';
 
 export interface TaskFieldProps {
    task: Task;
    type: 'source' | 'description';
 }
-
 
 export function TaskField({ task, type }: TaskFieldProps) {
    const repository = useMemo(() => new TaskRepositoryImpl(), []);

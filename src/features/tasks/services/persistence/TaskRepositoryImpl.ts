@@ -5,12 +5,13 @@
 
 import { z } from 'zod';
 
-import type { Task } from '../../types/entities';
-import RepositoryException from '../exceptions/RepositoryException';
-import TaskException from '../exceptions/TaskException';
-import type TaskRepository from './TaskRepository';
+import { Task } from '@/types/entities';
 
-class TaskRepositoryImpl implements TaskRepository {
+import { TaskRepository } from '@tasks/services/persistence/TaskRepository';
+import { RepositoryException } from '@tasks/services/exceptions/RepositoryException';
+import { TaskException } from '@tasks/services/exceptions/TaskException';
+
+export class TaskRepositoryImpl implements TaskRepository {
    private readonly STORAGE_KEY_TASKS = '__tasks__key__';
 
    private static readonly AddTaskSchema = z.object({
@@ -182,5 +183,3 @@ class TaskRepositoryImpl implements TaskRepository {
       return tasks.length;
    }
 }
-
-export default TaskRepositoryImpl;

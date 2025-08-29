@@ -126,6 +126,15 @@
    }
 }
 
+* {
+   caret-color: transparent;
+}
+
+input,
+textarea {
+   caret-color: auto;
+}
+
 /* === Task List === */
 
 /* Task List Scroll Bar - Light Mode */

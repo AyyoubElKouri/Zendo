@@ -3,7 +3,7 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import type { Task } from '../../types/entities';
+import { Task } from '@/types/entities';
 
 /**
  * Abstract repository defining persistence operations for Task entity.
@@ -12,7 +12,7 @@ import type { Task } from '../../types/entities';
  *  - TaskException: violation of business rules or task not found
  *  - RepositoryException: persistence/storage error
  */
-abstract class TaskRepository {
+export abstract class TaskRepository {
    /**
     * @throws TaskException if the task informations not respect the business rules for Task Entity
     *
@@ -55,5 +55,3 @@ abstract class TaskRepository {
     */
    abstract countTasks(): Promise<number>;
 }
-
-export default TaskRepository;

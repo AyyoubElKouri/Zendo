@@ -5,7 +5,7 @@
 
 import { create } from 'zustand';
 
-import type { Task } from '@/app/tasks/types/entities';
+import type { Task } from '@/types/entities';
 
 export interface TaskState {
    /**
