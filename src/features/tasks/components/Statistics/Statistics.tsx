@@ -26,34 +26,20 @@ export function Statistics() {
 
    return (
       <div
-         className='w-[1043px] h-[119px] bg-[#DADADA] dark:bg-[#090808] rounded-[16px]
-                    border-1 border-black/30 dark:border-white/10 grid grid-cols-[1fr_1fr_1fr]'
+         className='w-260 h-20 bg-background-2 rounded-large border-1 border-border grid
+                    grid-cols-[1fr_1fr_1fr]'
       >
          {statistics.map((statistic, index) => (
             <div
                key={statistic.label}
                className={clsx(
                   'flex justify-center items-center bg-transparent',
-                  index !== statistics.length - 1 &&
-                     'border-r-1 border-black/30 dark:border-white/10',
+                  index !== statistics.length - 1 && 'border-r-1 border-border',
                )}
             >
-               <div className='flex flex-col items-center gap-2'>
-                  <span className='text-[20px] font-medium text-[#4C4C4C]'>{statistic.label}</span>
-                  <div
-                     className={clsx(
-                        'w-[168px] h-[48px] flex justify-center items-center bg-[#F3F3F3]',
-                        'dark:bg-[#050404] rounded-[12px]',
-                        'border-1 border-black/30 dark:border-white/10',
-                     )}
-                  >
-                     <span
-                        className='text-[32px] text-[#FF6200] dark:text-[#FF6200]/80 
-                                   font-medium'
-                     >
-                        {statistic.value}
-                     </span>
-                  </div>
+               <div className='flex flex-col items-center'>
+                  <span className='text-lg font-medium text-secondary'>{statistic.label}</span>
+                  <span className='text-3xl text-accent font-medium'>{statistic.value}</span>
                </div>
             </div>
          ))}
