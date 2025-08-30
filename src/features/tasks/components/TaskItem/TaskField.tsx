@@ -23,12 +23,11 @@ export function TaskField({ task, type }: TaskFieldProps) {
    return (
       <div
          className={clsx(
-            'w-full h-full flex justify-start items-center',
-            'border-r border-black/30 dark:border-white/10',
-            states.isEditMode ? 'px-[6px]' : 'px-[12px]',
+            'w-full h-full flex justify-start items-center border-r border-border text-md',
+            states.isEditMode ? 'px-2' : 'px-4',
             type === 'source'
-               ? 'text-[18px] font-medium text-[#2A2929] dark:text-white'
-               : 'text-[16px] text-[#323232] dark:text-[#AAAAAA]',
+               ? 'font-medium text-[#2A2929] dark:text-white'
+               : 'text-[#323232] dark:text-[#AAAAAA]',
          )}
          onDoubleClick={handlers.enableEditMode}
       >
@@ -42,8 +41,7 @@ export function TaskField({ task, type }: TaskFieldProps) {
                onBlur={handlers.exitEditMode}
                onKeyDown={handlers.exitEditModeIfEnter}
                className={clsx(
-                  'w-full h-8 pl-[5px] border border-black/10 dark:border-white/10',
-                  'focus:outline-none rounded-lg',
+                  'w-full h-8 pl-2 border border-border focus:outline-none rounded-small',
                )}
             />
          ) : (

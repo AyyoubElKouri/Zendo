@@ -38,9 +38,8 @@ export function TaskItem({ task }: { task: Task }) {
 function TaskItemContainer({ children }: { children: ReactNode }) {
    return (
       <div
-         className='w-full min-h-[50px] rounded-xl bg-[#F3F3F3] dark:bg-[#050404] border-1
-                  border-black/30 dark:border-white/10 relative grid
-                    grid-cols-[36px_36px_222px_1fr_130px]'
+         className='w-full min-h-12 rounded-medium bg-background-1 border-1 border-border grid
+                    grid-cols-[36px_36px_222px_1fr_110px]'
       >
          {children}
       </div>
@@ -58,10 +57,9 @@ function TaskButton({ type, action }: TaskButtonProps) {
          type='button'
          onClick={action}
          className={clsx(
-            'w-full h-full bg-transparent flex justify-center items-center',
-            'hover:bg-[#e9e9e9] dark:hover:bg-[#292323]',
-            'border-r border-black/30 dark:border-white/10',
-            type === 'delete' && 'hover:rounded-l-xl',
+            'w-full h-full bg-transparent flex justify-center items-center hover:bg-background-2',
+            'border-r border-border',
+            type === 'delete' && 'hover:rounded-l-medium',
          )}
       >
          <Image
@@ -81,7 +79,7 @@ interface ToggleButtonProps {
 
 function ToggleButton({ completed, toggleTask }: ToggleButtonProps) {
    return (
-      <div className='w-full h-full flex justify-center items-center p-[10px]'>
+      <div className='w-full h-full flex justify-center items-center p-2'>
          <Button variant={completed ? 'finished' : 'pending'} onClick={toggleTask}>
             {completed ? 'Finished' : 'Pending'}
          </Button>
