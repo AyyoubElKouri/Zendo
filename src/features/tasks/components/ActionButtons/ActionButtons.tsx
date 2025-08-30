@@ -11,6 +11,7 @@ import { useTasksState } from '@/store/useTasksState';
 
 import { TaskRepository } from '@tasks/services/persistence/TaskRepository';
 import { TaskRepositoryImpl } from '@tasks/services/persistence/TaskRepositoryImpl';
+import { ConfirmationAlert } from '@/components/ui/AlertDialog';
 
 function useActionButtons(repository: TaskRepository) {
    // Zustand state
@@ -63,9 +64,13 @@ export function ActionButtons() {
 
    return (
       <div className='w-80 h-13 p-2 flex bg-background-2 border-1 border-border rounded-large'>
-         <Button variant={'deleteAll'} onClick={handlers.deleteAllTAsks}>
-            Delete All
-         </Button>
+         <ConfirmationAlert
+            action={handlers.deleteAllTAsks}
+            title='Sure ?'
+            description='This action will delete all tasks'
+         >
+            <Button variant={'deleteAll'}>Delete All</Button>
+         </ConfirmationAlert>
          <Button variant={'createTask'} onClick={handlers.createTask}>
             Create Task
          </Button>

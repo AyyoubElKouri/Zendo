@@ -15,6 +15,7 @@ import { Task } from '@/types/entities';
 import { TaskField } from '@tasks/components/TaskItem/TaskField';
 import { TaskRepositoryImpl } from '@tasks/services/persistence/TaskRepositoryImpl';
 import { useTaskItemAdapter } from '@tasks/components/TaskItem/useTaskItemAdapter';
+import { ConfirmationAlert } from '@/components/ui/AlertDialog';
 
 export function TaskItem({ task }: { task: Task }) {
    const repository = useMemo(() => new TaskRepositoryImpl(), []);
@@ -52,23 +53,37 @@ interface TaskButtonProps {
 }
 
 function TaskButton({ type, action }: TaskButtonProps) {
-   return (
+   const isDelete = type === 'delete';
+
+   const button = (
       <button
          type='button'
-         onClick={action}
+         onClick={!isDelete ? action : undefined}
          className={clsx(
             'w-full h-full bg-transparent flex justify-center items-center hover:bg-background-2',
             'border-r border-border',
-            type === 'delete' && 'hover:rounded-l-medium',
+            isDelete && 'hover:rounded-l-medium',
          )}
       >
          <Image
-            src={type === 'delete' ? '/icons/delete.svg' : '/icons/copy.svg'}
-            alt={type === 'delete' ? 'delete icon' : 'copy icon'}
-            width={type === 'delete' ? 25 : 20}
-            height={type === 'delete' ? 25 : 20}
+            src={isDelete ? '/icons/delete.svg' : '/icons/copy.svg'}
+            alt={isDelete ? 'delete icon' : 'copy icon'}
+            width={isDelete ? 25 : 20}
+            height={isDelete ? 25 : 20}
          />
       </button>
+   );
+
+   return isDelete ? (
+      <ConfirmationAlert
+         action={action}
+         title='Sure ?'
+         description='This action will delete the task'
+      >
+         {button}
+      </ConfirmationAlert>
+   ) : (
+      button
    );
 }
 
