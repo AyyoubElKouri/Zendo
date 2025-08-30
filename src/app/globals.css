@@ -9,6 +9,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+   /* --- Shadcn Styles --- */
    --color-background: var(--background);
    --color-foreground: var(--foreground);
    --font-sans: var(--font-geist-sans);
@@ -25,7 +26,7 @@
    --color-chart-4: var(--chart-4);
    --color-chart-3: var(--chart-3);
    --color-chart-2: var(--chart-2);
-   --color-chart-1: var(--chart-1);
+   --color-chart-1: var(--chart-1); 
    --color-ring: var(--ring);
    --color-input: var(--input);
    --color-border: var(--border);
@@ -42,13 +43,20 @@
    --color-popover: var(--popover);
    --color-card-foreground: var(--card-foreground);
    --color-card: var(--card);
-   --radius-sm: calc(var(--radius) - 4px);
-   --radius-md: calc(var(--radius) - 2px);
-   --radius-lg: var(--radius);
-   --radius-xl: calc(var(--radius) + 4px);
+
+   /* --- Custom Styles ( Desgin System ) --- */
+   --color-background-1: var(--background-1);
+   --color-background-2: var(--background-2);
+   --color-border: var(--border);
+   --color-accent: var(--accent);
+
+   --radius-small: 8px;
+   --radius-medium: 12px;
+   --radius-large: 16px;
 }
 
 :root {
+   /* --- Shadcn Styles --- */
    --radius: 0.625rem;
    --background: oklch(1 0 0);
    --foreground: oklch(0.145 0 0);
@@ -58,14 +66,11 @@
    --popover-foreground: oklch(0.145 0 0);
    --primary: oklch(0.205 0 0);
    --primary-foreground: oklch(0.985 0 0);
-   --secondary: oklch(0.97 0 0);
    --secondary-foreground: oklch(0.205 0 0);
    --muted: oklch(0.97 0 0);
    --muted-foreground: oklch(0.556 0 0);
-   --accent: oklch(0.97 0 0);
    --accent-foreground: oklch(0.205 0 0);
    --destructive: oklch(0.577 0.245 27.325);
-   --border: oklch(0.922 0 0);
    --input: oklch(0.922 0 0);
    --ring: oklch(0.708 0 0);
    --chart-1: oklch(0.646 0.222 41.116);
@@ -81,9 +86,16 @@
    --sidebar-accent-foreground: oklch(0.205 0 0);
    --sidebar-border: oklch(0.922 0 0);
    --sidebar-ring: oklch(0.708 0 0);
+
+   /* --- Custom Styles ( Desgin System ) --- */
+   --background-1: #f3f3f3;
+   --background-2: #dadada;
+   --border: #0000004d;
+   --accent: #ff8000;
 }
 
 .dark {
+   /* --- Shadcn Styles --- */
    --background: oklch(0.145 0 0);
    --foreground: oklch(0.985 0 0);
    --card: oklch(0.205 0 0);
@@ -92,14 +104,11 @@
    --popover-foreground: oklch(0.985 0 0);
    --primary: oklch(0.922 0 0);
    --primary-foreground: oklch(0.205 0 0);
-   --secondary: oklch(0.269 0 0);
    --secondary-foreground: oklch(0.985 0 0);
    --muted: oklch(0.269 0 0);
    --muted-foreground: oklch(0.708 0 0);
-   --accent: oklch(0.269 0 0);
    --accent-foreground: oklch(0.985 0 0);
    --destructive: oklch(0.704 0.191 22.216);
-   --border: oklch(1 0 0 / 10%);
    --input: oklch(1 0 0 / 15%);
    --ring: oklch(0.556 0 0);
    --chart-1: oklch(0.488 0.243 264.376);
@@ -115,6 +124,12 @@
    --sidebar-accent-foreground: oklch(0.985 0 0);
    --sidebar-border: oklch(1 0 0 / 10%);
    --sidebar-ring: oklch(0.556 0 0);
+
+   /* --- Custom Styles ( Desgin System ) --- */
+   --background-1: #040404;
+   --background-2: #090808;
+   --border: #ffffff1a;
+   --accent: #ff6200cc;
 }
 
 @layer base {
@@ -133,24 +148,4 @@
 input,
 textarea {
    caret-color: auto;
-}
-
-/* === Task List === */
-
-/* Task List Scroll Bar - Light Mode */
-.task-list::-webkit-scrollbar {
-   @apply bg-[#FDB976] w-[5px] rounded-full;
-}
-
-.task-list::-webkit-scrollbar-thumb {
-   @apply bg-[#FF7F00] rounded-full;
-}
-
-/* Task List Scroll Bar - Dark Mode */
-.dark .task-list::-webkit-scrollbar {
-   @apply bg-[#321900];
-}
-
-.dark .task-list::-webkit-scrollbar-thumb {
-   @apply bg-[#D03F00];
 }

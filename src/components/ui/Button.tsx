@@ -22,9 +22,9 @@ const buttonVariants = cva(
             pending: 'bg-[#C42D78] dark:bg-[#5C0B33]',
             finished: 'bg-[#4055A8] dark:bg-[#19216C]',
             createTask:
-               'w-[198px] bg-[#D03F00] text-[20px] text-white font-semibold rounded-[12px]',
+               'w-1/2 bg-accent text-md text-white font-medium rounded-[12px]',
             deleteAll:
-               'w-[198px] bg-transparent text-[20px] font-semibold text-[#3B3B3B] dark:text-[#AEAEAE]',
+               `w-1/2 bg-transparent text-md font-medium text-[#3B3B3B] dark:text-[#AEAEAE]`,
          },
       },
       defaultVariants: {

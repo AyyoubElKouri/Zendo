@@ -6,13 +6,36 @@
 @import "tailwindcss";
 
 @theme inline {
-   --color-date: var(--date);
+   --color-secondary: var(--secondary);
+   --text-link-size: var(--link-size);
 }
 
 :root {
-   --date: #515151;
+   --secondary: #515151;
+   --link-size: 15px;
 }
 
 .dark {
-   --date: #7c7c7c;
+   --secondary: #7c7c7c;
+   --link-size: 15px;
+}
+
+/* === Task List === */
+
+/* Task List Scroll Bar - Light Mode */
+.task-list::-webkit-scrollbar {
+   @apply bg-[#FDB976] w-[5px] rounded-full;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+   @apply bg-[#FF7F00] rounded-full;
+}
+
+/* Task List Scroll Bar - Dark Mode */
+.dark .task-list::-webkit-scrollbar {
+   @apply bg-[#321900];
+}
+
+.dark .task-list::-webkit-scrollbar-thumb {
+   @apply bg-[#D03F00];
 }
