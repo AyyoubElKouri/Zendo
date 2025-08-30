@@ -19,14 +19,13 @@ export function ToggleThemeButton() {
 
    return (
       <div
-         className='w-[164px] h-[27px] rounded-full border-1 border-black/30 
-         dark:border-white/10 flex justify-between text-[16px] font-semibold'
+         className='w-[164px] h-[27px] rounded-full border-1 border-border flex justify-between text-[16px] font-semibold'
       >
          <button
             type='button'
             onClick={() => setTheme('light')}
             className={clsx(
-               'w-[82px] border-r-1 border-black/30 dark:border-white/10 rounded-l-full',
+               'w-[82px] border-r-1 border-border rounded-l-full',
                theme === 'light' ? 'text-black bg-[#b8b8b8]' : 'text-[#CECECE] bg-[#090808]',
             )}
          >

@@ -26,8 +26,8 @@ export function TaskField({ task, type }: TaskFieldProps) {
             'w-full h-full flex justify-start items-center border-r border-border text-md',
             states.isEditMode ? 'px-2' : 'px-4',
             type === 'source'
-               ? 'font-medium text-[#2A2929] dark:text-white'
-               : 'text-[#323232] dark:text-[#AAAAAA]',
+               ? 'font-medium text-secondary'
+               : 'text-secondary',
          )}
          onDoubleClick={handlers.enableEditMode}
       >

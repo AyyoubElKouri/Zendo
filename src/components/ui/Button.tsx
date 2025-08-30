@@ -19,12 +19,10 @@ const buttonVariants = cva(
       variants: {
          variant: {
             default: 'bg-primary shadow-xs hover:bg-primary/90',
-            pending: 'bg-[#C42D78] dark:bg-[#5C0B33]',
-            finished: 'bg-[#4055A8] dark:bg-[#19216C]',
-            createTask:
-               'w-1/2 bg-accent text-md text-white font-medium rounded-[12px]',
-            deleteAll:
-               `w-1/2 bg-transparent text-md font-medium text-[#3B3B3B] dark:text-[#AEAEAE]`,
+            pending: 'bg-pending',
+            finished: 'bg-finished',
+            createTask: 'w-1/2 bg-accent text-md text-white font-medium rounded-[12px]',
+            deleteAll: `w-1/2 bg-transparent text-md font-medium text-secondary`,
          },
       },
       defaultVariants: {

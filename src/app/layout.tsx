@@ -29,8 +29,8 @@ export default function RootLayout({
          <body className={Inter.className}>
             <ThemeProvider
                attribute='class'
-               defaultTheme='system'
-               enableSystem
+               defaultTheme='light'
+               enableSystem={false}
                disableTransitionOnChange
             >
                <div className='flex'>{children}</div>
