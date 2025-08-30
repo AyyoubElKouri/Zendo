@@ -15,7 +15,7 @@ export function Header() {
          <span className='text-xl font-medium'>
             Welcome <span className='text-accent'>{username}</span>
          </span>
-         <span className='text-sm text-date'>{date}</span>
+         <span className='text-sm text-secondary'>{date}</span>
       </div>
    );
 }
