@@ -14,11 +14,10 @@ export function TaskList() {
 
    return (
       <div
-         className='w-[1043px] h-[524px] bg-[#DADADA] rounded-[16px] border-1 border-black/30
-                  dark:border-white/10 dark:bg-[#090808] py-[35px] pl-[35px] pr-[17px]
+         className='w-260 h-110 bg-background-2 rounded-large border-1 border-border py-8 pl-8 pr-4
                     overflow-auto'
       >
-         <div className='task-list pr-[16px] w-full h-full flex flex-col gap-2 overflow-auto'>
+         <div className='task-list pr-4 w-full h-full flex flex-col gap-2 overflow-auto'>
             {tasks.map((task: Task) => (
                <TaskItem key={task.id} task={task} />
             ))}
