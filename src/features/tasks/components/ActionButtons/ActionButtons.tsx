@@ -3,47 +3,46 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import clsx from 'clsx';
+import { useMemo } from 'react';
+
 import { Button } from '@/components/ui/Button';
 import { Task } from '@/types/entities';
+import { useTasksState } from '@/store/useTasksState';
 
 import { TaskRepository } from '@tasks/services/persistence/TaskRepository';
-import { useTasksState } from '@/store/useTasksState';
-import { useMemo } from 'react';
-import { TaskRepositoryImpl } from '../../services/persistence/TaskRepositoryImpl';
+import { TaskRepositoryImpl } from '@tasks/services/persistence/TaskRepositoryImpl';
 
 function useActionButtons(repository: TaskRepository) {
    // Zustand state
    const { addTask, removeAllTask } = useTasksState();
 
-   // Handler for creating new task
+   // Handler
    async function createTask() {
       try {
-         // new task with default values.
-         const newTask: Task = {
+         const defaultValue: Task = {
             id: Date.now(),
             source: 'Default Source',
             description: 'Default Description',
             completed: false,
          };
 
-         // Local storage.
-         repository.addTask(newTask);
+         // In Local Storage.
+         repository.addTask(defaultValue);
 
-         // the UI (Zustand state).
-         addTask(newTask);
+         // In UI.
+         addTask(defaultValue);
       } catch (error) {
          // TODO: handle this Error.
       }
    }
 
-   // Handler for deleting all tasks.
+   // Handler
    async function deleteAllTAsks() {
       try {
-         // In the local storage.
+         // In Local Storage.
          await repository.deleteAllTasks();
 
-         // In the UI (Zustand State)
+         // In UI
          removeAllTask();
       } catch (error) {
          // TODO: Handle this Error.
@@ -63,12 +62,7 @@ export function ActionButtons() {
    const { handlers } = useActionButtons(repository);
 
    return (
-      <div
-         className={clsx(
-            'w-[413px] h-[64px] p-[8px] flex bg-[#DADADA] dark:bg-[#090808]',
-            'border-1 border-black/30 dark:border-white/10 rounded-[16px]',
-         )}
-      >
+      <div className='w-80 h-13 p-2 flex bg-background-2 border-1 border-border rounded-large'>
          <Button variant={'deleteAll'} onClick={handlers.deleteAllTAsks}>
             Delete All
          </Button>
