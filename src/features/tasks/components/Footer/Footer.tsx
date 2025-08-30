@@ -13,26 +13,24 @@ const LINKEDIN_LINK = 'https://www.linkedin.com/in/ayyoub-el-kouri-0a34ab328/';
 export function Footer() {
    return (
       <div
-         className='w-full h-[53px] bg-[#DADADA] dark:bg-[#090808] border-t-1 border-black/30
-                  dark:border-white/10 flex justify-between items-center px-[38px]'
+         className='w-full h-13 bg-background-2 border-t-1 border-border px-4 flex justify-between 
+                    items-center'
       >
          <ToggleThemeButton />
 
-         <span className='text-[16px] text-[#3B3B3B] dark:text-[#AAAAAA]'>{COPYRIGHT}</span>
+         <span className='text-sm text-secondary'>{COPYRIGHT}</span>
 
-         <div className='flex gap-[22px] text-[15px] text-[#3B3B3B] dark:text-[#BCBCBC]'>
+         <div className='flex gap-5 text-link-size text-secondary'>
             <Link
                href={GITHUB_LINK}
-               className='border-b-1 border-[#3B3B3B] dark:border-[#BCBCBC] 
-                        hover:!border-[#FF4D00]  hover:text-[#FF4D00]'
+               className='border-b-1 border-secondary hover:text-accent hover:!border-accent'
                target='_blank'
             >
                GitHub
             </Link>
             <Link
                href={LINKEDIN_LINK}
-               className='border-b-1 border-[#3B3B3B] dark:border-[#BCBCBC]  
-                        hover:!border-[#FF4D00]  hover:text-[#FF4D00]'
+               className='border-b-1 border-secondary hover:text-accent hover:!border-accent'
                target='_blank'
             >
                LinkedIn
