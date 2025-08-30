@@ -19,6 +19,7 @@ const buttonVariants = cva(
       variants: {
          variant: {
             default: 'bg-primary shadow-xs hover:bg-primary/90',
+            outline: '',
             pending: 'bg-pending',
             finished: 'bg-finished',
             createTask: 'w-1/2 bg-accent text-md text-white font-medium rounded-[12px]',

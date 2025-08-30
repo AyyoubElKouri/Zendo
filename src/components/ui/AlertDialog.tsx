@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 
 import { cn } from '@/lib/utils';
-import { Button, buttonVariants } from '@/components/ui/Button';
+import { buttonVariants } from '@/components/ui/Button';
 
 function AlertDialog({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Root>) {
    return <AlertDialogPrimitive.Root data-slot='alert-dialog' {...props} />;
@@ -114,7 +114,7 @@ function AlertDialogCancel({
 }: React.ComponentProps<typeof AlertDialogPrimitive.Cancel>) {
    return (
       <AlertDialogPrimitive.Cancel
-         className={cn(buttonVariants({ variant: 'outline' }), className)}
+         className={cn(buttonVariants(), className)}
          {...props}
       />
    );
@@ -141,7 +141,7 @@ function ConfirmationAlert({
             </AlertDialogHeader>
 
             <AlertDialogFooter className='flex justify-start items-center'>
-               <AlertDialogCancel className='max-w-40 max-h-10 rounded-large border-1 border-border bg-background-2 text-secondary'>
+               <AlertDialogCancel className='max-w-40 max-h-10 rounded-large border-1 border-border bg-background-2 text-secondary hover:bg-background-2/80'>
                   Cancel
                </AlertDialogCancel>
 
