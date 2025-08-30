@@ -36,16 +36,11 @@ export function TasksPage() {
    }, [repo, addTask]);
 
    return (
-      <div
-         className='w-full min-h-svh bg-background-1 flex flex-col justify-center items-center text-4xl
-                  '
-      >
+      <div className='w-full min-h-svh bg-background-1 flex flex-col justify-between items-center gap-4'>
          <Header />
-         <div className='w-[1043px] flex flex-col items-center gap-[36px] my-4'>
-            <Statistics />
-            <TaskList />
-            <ActionButtons />
-         </div>
+         <Statistics />
+         <TaskList />
+         <ActionButtons />
          <Footer />
       </div>
    );
