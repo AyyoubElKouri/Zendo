@@ -57,6 +57,12 @@
    --radius-small: 8px;
    --radius-medium: 12px;
    --radius-large: 16px;
+
+   --color-secondary: var(--secondary);
+   --color-toast-success: var(--toast-success);
+   --color-toast-error: var(--toast-error);
+
+   --text-link-size: var(--link-size);
 }
 
 :root {
@@ -100,6 +106,12 @@
 
    --pending: #C42D78;
    --finished: #4055A8;
+
+   --secondary: #515151;
+   --link-size: 15px;
+
+   --toast-success: #2d3a8c;
+   --toast-error: #ba2525;
 }
 
 .dark {
@@ -142,6 +154,12 @@
 
    --pending: #5C0B33;
    --finished: #19216C;
+
+   --secondary: #7c7c7c;
+   --link-size: 15px;
+
+   --toast-success: #bed0f7;
+   --toast-error: #facdcd;
 }
 
 @layer base {
@@ -160,4 +178,25 @@
 input,
 textarea {
    caret-color: auto;
+}
+
+
+/* === Task List === */
+
+/* Task List Scroll Bar - Light Mode */
+.task-list::-webkit-scrollbar {
+   @apply bg-[#FDB976] w-[5px] rounded-full;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+   @apply bg-[#FF7F00] rounded-full;
+}
+
+/* Task List Scroll Bar - Dark Mode */
+.dark .task-list::-webkit-scrollbar {
+   @apply bg-[#321900];
+}
+
+.dark .task-list::-webkit-scrollbar-thumb {
+   @apply bg-[#D03F00];
 }
