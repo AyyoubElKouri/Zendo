@@ -7,9 +7,9 @@ import { z } from 'zod';
 
 import { Task } from '@/types/entities';
 
-import { TaskRepository } from '@tasks/services/persistence/TaskRepository';
-import { RepositoryException } from '@tasks/services/exceptions/RepositoryException';
-import { TaskException } from '@tasks/services/exceptions/TaskException';
+import { TaskRepository } from '@/services/persistence/task-repository';
+import { RepositoryException } from '@/services/exceptions';
+import { TaskException } from '@/services/exceptions';
 
 export class TaskRepositoryImpl implements TaskRepository {
    private readonly STORAGE_KEY_TASKS = '__tasks__key__';
