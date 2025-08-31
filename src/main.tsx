@@ -3,7 +3,15 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-class Exception extends Error {}
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 
-export class TaskException extends Exception {}
-export class RepositoryException extends Exception {}
+import { TasksPage } from "@/TasksPage";
+
+import "@/globals.css";
+
+createRoot(document.getElementById("root")!).render(
+	<StrictMode>
+		<TasksPage />
+	</StrictMode>,
+);
