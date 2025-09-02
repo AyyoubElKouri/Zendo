@@ -5,37 +5,42 @@
 
 export const AccentColors = {
 	orange: {
-		primary: "orange-700",
-		secondary: "orange-950",
+		primary: "#f97316", // orange vibrant, par défaut
+		secondary: "#9a3412", // orange brun chaud
 	},
 
-	lime: {
-		primary: "lime-700",
-		secondary: "lime-950",
+	emerald: {
+		primary: "#10b981", // vert émeraude très clair
+		secondary: "#065f46", // vert forêt foncé
 	},
 
-	purple: {
-		primary: "purple-700",
-		secondary: "purple-950",
+	indigo: {
+		primary: "#6366f1", // indigo moderne
+		secondary: "#3730a3", // indigo profond
 	},
 
 	rose: {
-		primary: "rose-700",
-		secondary: "rose-950",
+		primary: "#e11d48", // rose punchy
+		secondary: "#881337", // rose sombre
 	},
 
-	blue: {
-		primary: "blue-700",
-		secondary: "blue-950",
+	cyan: {
+		primary: "#06b6d4", // cyan flashy
+		secondary: "#164e63", // bleu pétrole
 	},
 
-	green: {
-		primary: "green-700",
-		secondary: "green-950",
+	amber: {
+		primary: "#f59e0b", // jaune chaud doré
+		secondary: "#78350f", // marron foncé chaud
 	},
 
-	fuchsia: {
-		primary: "fuchsia-700",
-		secondary: "fuchsia-950",
+	teal: {
+		primary: "#14b8a6", // teal lumineux
+		secondary: "#134e4a", // teal profond
+	},
+
+	red: {
+		primary: "#ef4444", // rouge énergique
+		secondary: "#7f1d1d", // rouge foncé profond
 	},
 };
