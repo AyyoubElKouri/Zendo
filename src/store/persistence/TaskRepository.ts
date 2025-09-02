@@ -25,7 +25,7 @@ export class TaskRepository {
 		description: z
 			.string()
 			.min(1, "Description cannot be empty")
-			.max(200, "Description must not exceed 200 characters"),
+			.max(70, "Description must not exceed 70 characters"),
 
 		completed: z.boolean(),
 	});
@@ -43,7 +43,7 @@ export class TaskRepository {
 		}
 	}
 
-	private async saveTasks(tasks: Task[]): Promise<void> {
+	private saveTasks(tasks: Task[]): void {
 		try {
 			if (!this.isAvailable()) {
 				throw new RepositoryException("localStorage is not available");
@@ -61,7 +61,7 @@ export class TaskRepository {
 		}
 	}
 
-	private async loadTasks(): Promise<Task[]> {
+	private loadTasks(): Task[] {
 		try {
 			if (!this.isAvailable()) {
 				throw new RepositoryException("localStorage is not available");
@@ -89,7 +89,7 @@ export class TaskRepository {
 		}
 	}
 
-	public async addTask(task: Task, position?: number): Promise<Task> {
+	public addTask(task: Task, position?: number): Task {
 		// Validate task input
 		const results = TaskRepository.AddTaskSchema.safeParse(task);
 		if (!results.success) {
@@ -100,7 +100,7 @@ export class TaskRepository {
 		const validatedTask = results.data;
 
 		// Check if task with same ID already exists
-		const tasks = await this.loadTasks();
+		const tasks = this.loadTasks();
 		if (tasks.some((t) => t.id === validatedTask.id)) {
 			throw new TaskException(`Task with ID ${validatedTask.id} already exists`);
 		}
@@ -112,12 +112,12 @@ export class TaskRepository {
 			tasks.push(validatedTask);
 		}
 
-		await this.saveTasks(tasks);
+		this.saveTasks(tasks);
 
 		return validatedTask;
 	}
 
-	public async updateTask(id: number, updates: Partial<Task>): Promise<Task> {
+	public updateTask(id: number, updates: Partial<Task>): Task {
 		// Validate updates input
 		const results = TaskRepository.UpdateTaskSchema.safeParse(updates);
 		if (!results.success) {
@@ -126,7 +126,7 @@ export class TaskRepository {
 		}
 
 		const validatedUpdates = results.data;
-		const tasks = await this.loadTasks();
+		const tasks = this.loadTasks();
 
 		// Find and update the task
 		const taskIndex = tasks.findIndex((task) => task.id === id);
@@ -144,13 +144,13 @@ export class TaskRepository {
 		}
 
 		tasks[taskIndex] = finalValidation.data;
-		await this.saveTasks(tasks);
+		this.saveTasks(tasks);
 
 		return finalValidation.data;
 	}
 
-	public async deleteTask(id: number): Promise<void> {
-		const tasks = await this.loadTasks();
+	public deleteTask(id: number): void {
+		const tasks = this.loadTasks();
 
 		const taskIndex = tasks.findIndex((task) => task.id === id);
 		if (taskIndex === -1) {
@@ -158,25 +158,25 @@ export class TaskRepository {
 		}
 
 		tasks.splice(taskIndex, 1);
-		await this.saveTasks(tasks);
+		this.saveTasks(tasks);
 	}
 
-	public async deleteAllTasks(): Promise<void> {
-		await this.saveTasks([]);
+	public deleteAllTasks(): void {
+		this.saveTasks([]);
 	}
 
-	public async findTaskById(id: number): Promise<Task | null> {
-		const tasks = await this.loadTasks();
+	public findTaskById(id: number): Task | null {
+		const tasks = this.loadTasks();
 		const task = tasks.find((task) => task.id === id);
 		return task ?? null;
 	}
 
-	public async findAllTasks(): Promise<Task[]> {
-		return await this.loadTasks();
+	public findAllTasks(): Task[] {
+		return this.loadTasks();
 	}
 
-	public async countTasks(): Promise<number> {
-		const tasks = await this.loadTasks();
+	public countTasks(): number {
+		const tasks = this.loadTasks();
 		return tasks.length;
 	}
 }
