@@ -5,26 +5,29 @@
 
 import type { JSX } from "react";
 
-import { ConfirmationAlert } from "@/components/ui/AlertDialog";
 import { Button } from "@/components/ui/Button";
+import { ConfirmationAlert } from "@/components/ui/AlertDialog";
 
 import { useAccentColor } from "@/hooks/useAccentColor";
-import { useActionBarWithQuote } from "@/hooks/useActionBarWithQuote";
+import { useTasks } from "@/hooks/useTasks";
+import { useToast } from "@/hooks/useToast";
+import { useQuote } from "@/hooks/useQuote";
 
 export function ActionBarWithQuote() {
+	const { createTask, deleteAllTasks } = useTasks();
 	const { primary } = useAccentColor();
-	const { handlers, toast } = useActionBarWithQuote();
+	const { toast } = useToast();
+	const { quote } = useQuote();
 
+	let message: string;
 	let icon: JSX.Element;
-	switch (toast.type) {
-		case "quote":
-			icon = <QuoteIcon />;
-			break;
-		case "success":
-			icon = <SuccessIcon />;
-			break;
-		default:
-			icon = <ErrorIcon />;
+
+	if (toast.type && toast.message) {
+		message = toast.message;
+		icon = toast.type === "success" ? <SuccessIcon /> : <ErrorIcon />;
+	} else {
+		message = quote;
+		icon = <QuoteIcon />;
 	}
 
 	return (
@@ -33,14 +36,14 @@ export function ActionBarWithQuote() {
                     justify-between items-center pl-4 pr-3.5 py-3.5"
 		>
 			<div className="flex justify-start items-center gap-3">
-				{icon} <span className="text-medium text-neutral-400">{toast.message}</span>
+				{icon} <span className="text-medium text-neutral-400">{message}</span>
 			</div>
 
 			<div className="flex justify-end items-center gap-3.5 font-medium">
 				<ConfirmationAlert
 					title="Sure you want to do this?"
 					description="This action will delete all tasks"
-					action={handlers.deleteAllTasks}
+					action={deleteAllTasks}
 				>
 					<Button
 						className="w-31 h-8.5 text-[18px] text-neutral-400 bg-transparent border-1
@@ -53,7 +56,7 @@ export function ActionBarWithQuote() {
 				<Button
 					className="w-31 h-8.5 text-[18px] text-white"
 					style={{ backgroundColor: primary }}
-					onClick={handlers.createTask}
+					onClick={createTask}
 				>
 					Create
 				</Button>
