@@ -6,11 +6,13 @@
 import clsx from "clsx";
 
 import { useAccentColor } from "@/hooks/useAccentColor";
-import { useStatistics } from "@/hooks/useStatistics";
+import { useTasks } from "@/hooks/useTasks";
 
 export function Statistics() {
-	const { statistics } = useStatistics();
-	const statisticsToMap = [
+	const { getStatistics } = useTasks();
+
+	const statistics = getStatistics();
+	const statisticsArray = [
 		{ label: "All Tasks", value: statistics.allTasksNumber },
 		{ label: "Completed Tasks", value: statistics.completedTasksNumber },
 		{ label: "Rate Of Completion", value: statistics.rateOfCompletion },
@@ -18,11 +20,11 @@ export function Statistics() {
 
 	return (
 		<div className="flex bg-neutral-950 rounded-medium border-1 border-border">
-			{statisticsToMap.map((statisticsItem, index) => (
+			{statisticsArray.map((statisticsItem, index) => (
 				<StatisticsItem
 					key={statisticsItem.label}
 					{...statisticsItem}
-					isLast={index === statisticsToMap.length - 1}
+					isLast={index === statisticsArray.length - 1}
 				/>
 			))}
 		</div>
