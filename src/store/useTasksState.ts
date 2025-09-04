@@ -29,12 +29,12 @@ export interface TaskState {
 	/**
 	 * Remove a task from the list by its ID.
 	 */
-	removeTask: (id: number) => void;
+	deleteTask: (id: number) => void;
 
 	/**
 	 * Remove a task from the list by its ID.
 	 */
-	removeAllTasks: () => void;
+	deleteAllTasks: () => void;
 
 	/**
 	 * Return all tasks in natural order.
@@ -70,13 +70,13 @@ export const useTasksState = create<TaskState>((set, get) => ({
 		}));
 	},
 
-	removeTask: (id: number): void => {
+	deleteTask: (id: number): void => {
 		set((state) => ({
 			tasks: state.tasks.filter((task) => task.id !== id),
 		}));
 	},
 
-	removeAllTasks: (): void => {
+	deleteAllTasks: (): void => {
 		set(() => ({
 			tasks: [],
 		}));

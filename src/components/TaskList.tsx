@@ -3,15 +3,15 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { useTasksState } from "@/store/useTasksState";
-import { TaskItem } from "./TaskItem";
+import { TaskItem } from "@/components/TaskItem";
 import { useAccentColor } from "@/hooks/useAccentColor";
+import { useTasks } from "@/hooks/useTasks";
 
 export function TaskList() {
 	const { primary, secondary } = useAccentColor();
+	const { tasksState } = useTasks();
 
-	const { getAllTasks } = useTasksState();
-	const tasks = getAllTasks();
+	const tasks = tasksState.getAllTasks();
 
 	return (
 		<div className="w-261 h-105 bg-neutral-950 border-1 border-border rounded-medium p-6">

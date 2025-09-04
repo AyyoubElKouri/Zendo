@@ -19,7 +19,7 @@ export function useTasks() {
 	function createTask() {
 		// Default values
 		const defaultTask: Task = {
-			id: Date.now() + Math.random(),
+			id: Date.now(),
 			source: "Default Source",
 			description: "Default Description",
 			completed: false,
@@ -89,6 +89,8 @@ export function useTasks() {
 
 			repository.addTask(defaultTask, index + 1);
 			tasksState.addTask(defaultTask, index + 1);
+
+			toast.success("Task copied successfuly");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				toast.error(error.message);
@@ -103,8 +105,8 @@ export function useTasks() {
 				throw new Error(`Task with ID ${id} not found`);
 			}
 
-			tasksState.updateTask(id, { completed: task.completed });
-			repository.updateTask(id, { completed: task.completed });
+			tasksState.updateTask(id, { completed: !task.completed });
+			repository.updateTask(id, { completed: !task.completed });
 
 			toast.success(task.completed ? "Task finished Successfuly" : "Task not finished");
 		} catch (error: unknown) {
@@ -137,5 +139,7 @@ export function useTasks() {
 		duplicateTask,
 		toggleTask,
 		getStatistics,
+		repository,
+		tasksState,
 	};
 }
