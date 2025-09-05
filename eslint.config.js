@@ -21,3 +21,7 @@ export default tseslint.config([
 		},
 	},
 ]);
+
+export function readFromBuffer() {
+
+}
