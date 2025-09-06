@@ -3,9 +3,9 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { ACCENT_COLORS } from "@shared/constants";
 import { create } from "zustand";
 import type { AccentColorType } from "@shared/hooks";
+import { ACCENT_COLORS } from "@shared/constants";
 
 interface AccentColorState {
 	accentColor: AccentColorType;

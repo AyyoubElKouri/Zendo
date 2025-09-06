@@ -4,9 +4,9 @@
  *------------------------------------------------------------------------------------------------*/
 
 import { useMemo } from "react";
-import { useToast } from "@/shared/hooks/useToast";
-import { TaskRepository } from "@/features/tasks/services/TaskRepository";
-import { useTasksState } from "@/features/tasks/store/useTasksState";
+import { useToast } from "@shared/hooks";
+import { TaskRepository } from "@features/tasks/services/TaskRepository";
+import { useTasksState } from "@features/tasks/store/useTasksState";
 import type { Task } from "@features/tasks/entities";
 
 export function useTasks() {

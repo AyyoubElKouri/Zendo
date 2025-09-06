@@ -4,13 +4,13 @@
  *------------------------------------------------------------------------------------------------*/
 
 import { useEffect, useRef } from "react";
-import { ActionBarWithQuote } from "@/features/tasks/components/ActionBarWithQuote";
-import { Footer } from "@/shared/components/layout/Footer";
-import { Header } from "@/shared/components/layout/Header";
-import { Statistics } from "@/features/tasks/components/Statistics";
-import { TaskList } from "@/features/tasks/components/TaskList";
-import { useTasks } from "../hooks/useTasks";
-import { useToast } from "../../../shared/hooks/useToast";
+import { ActionBarWithQuote } from "@features/tasks/components/ActionBarWithQuote";
+import { Footer } from "@shared/components";
+import { Header } from "@shared/components";
+import { Statistics } from "@features/tasks/components/Statistics";
+import { TaskList } from "@features/tasks/components/TaskList";
+import { useTasks } from "@features/tasks/hooks/useTasks";
+import { useToast } from "@shared/hooks";
 
 export function TasksPage() {
 	const { tasksState, repository } = useTasks();

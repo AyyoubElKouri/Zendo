@@ -3,8 +3,8 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { ThemeSelector } from "@/shared/components/ui/ThemeSelector";
-import { useAccentColor } from "@/shared/hooks/useAccentColor";
+import { ThemeSelector } from "@shared/components";
+import { useAccentColor } from "@shared/hooks";
 
 const COPYRIGHT = "Copyright (c) Ayyoub EL Kouri. All rights reserved";
 const GITHUB_LINK = "https://github.com/AyyoubElKouri";

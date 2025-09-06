@@ -3,7 +3,7 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { useToastStore } from "@/shared/store/useToastState";
+import { useToastStore } from "@shared/store";
 
 export interface ToastType {
 	toast: {

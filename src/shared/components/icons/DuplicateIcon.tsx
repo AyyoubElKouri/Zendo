@@ -3,7 +3,7 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { useAccentColor } from "@/shared/hooks/useAccentColor";
+import { useAccentColor } from "@shared/hooks";
 
 export function DuplicateIcon() {
 	const { primary } = useAccentColor();

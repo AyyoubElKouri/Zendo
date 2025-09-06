@@ -3,9 +3,9 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { TaskItem } from "@/features/tasks/components/TaskItem";
-import { useAccentColor } from "@/shared/hooks/useAccentColor";
-import { useTasks } from "@/features/tasks/hooks/useTasks";
+import { useAccentColor } from "@shared/hooks";
+import { TaskItem } from "@features/tasks/components/TaskItem";
+import { useTasks } from "@features/tasks/hooks/useTasks";
 
 export function TaskList() {
 	const { primary, secondary } = useAccentColor();

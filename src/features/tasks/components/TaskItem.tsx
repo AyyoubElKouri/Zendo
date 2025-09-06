@@ -3,15 +3,14 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { Button, Input } from "@headlessui/react";
 import { clsx } from "clsx";
+import { Button, Input } from "@headlessui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { DeleteIcon, DuplicateIcon } from "@/shared/components/icons";
-import { ConfirmationAlert } from "@/shared/components/ui/AlertDialog";
+import { DeleteIcon, DuplicateIcon, ConfirmationButton } from "@shared/components";
+import { useAccentColor } from "@shared/hooks";
 
-import { useAccentColor } from "@/shared/hooks/useAccentColor";
-import { useTasks } from "@/features/tasks/hooks/useTasks";
+import { useTasks } from "@features/tasks/hooks/useTasks";
 
 export function TaskItem({ id }: { id: number }) {
 	const { primary, secondary } = useAccentColor();
@@ -70,13 +69,14 @@ function ActionButton({ id, type }: { id: number; type: "delete" | "duplicate" }
 	);
 
 	return type === "delete" ? (
-		<ConfirmationAlert
+		<ConfirmationButton
+			button={<DeleteIcon />}
 			title="Sure you want to do this?"
 			description="this action will delete this task"
-			action={handleDelete}
-		>
-			{button}
-		</ConfirmationAlert>
+			callback={handleDelete}
+			className="w-8.5 h-full gap-0 rounded-none bg-transparent border-r-1 border-border flex 
+                   justify-center items-center hover:bg-neutral-900 active:scale-95 hover:rounded-l-small"
+		/>
 	) : (
 		<div>{button}</div>
 	);

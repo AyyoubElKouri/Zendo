@@ -5,7 +5,7 @@
 
 import { useEffect } from "react";
 
-import { useAccentColorState } from "@/shared/store/useAccentColorState";
+import { useAccentColorState } from "@shared/store";
 import { ACCENT_COLORS } from "@shared/constants";
 
 const LOCAL_STORAGE_KEY = "__ACCENT_COLOR_KEY__";

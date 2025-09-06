@@ -5,8 +5,8 @@
 
 import clsx from "clsx";
 
-import { useAccentColor } from "@/shared/hooks/useAccentColor";
-import { useTasks } from "@/features/tasks/hooks/useTasks";
+import { useAccentColor } from "@shared/hooks";
+import { useTasks } from "@features/tasks/hooks/useTasks";
 
 export function Statistics() {
 	const { getStatistics } = useTasks();

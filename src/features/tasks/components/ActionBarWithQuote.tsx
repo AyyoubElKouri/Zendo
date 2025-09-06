@@ -3,15 +3,14 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { ErrorIcon, QuoteIcon, SuccessIcon } from "@shared/components/icons";
+import { Button } from "@headlessui/react";
 
-import { ConfirmationAlert } from "@/shared/components/ui/AlertDialog";
-import { Button } from "@/shared/components/ui/Button";
-
-import { useAccentColor } from "@/shared/hooks/useAccentColor";
-import { useTasks } from "@/features/tasks/hooks/useTasks";
-import { useToast } from "@/shared/hooks/useToast";
+import { ErrorIcon, QuoteIcon, SuccessIcon, ConfirmationButton } from "@shared/components";
+import { useAccentColor } from "@shared/hooks";
+import { useToast } from "@shared/hooks";
 import { QUOTES } from "@shared/constants";
+
+import { useTasks } from "@features/tasks/hooks/useTasks";
 
 export function ActionBarWithQuote() {
 	const { createTask, deleteAllTasks } = useTasks();
@@ -40,21 +39,17 @@ export function ActionBarWithQuote() {
 			</div>
 
 			<div className="flex justify-end items-center gap-3.5 font-medium">
-				<ConfirmationAlert
+				<ConfirmationButton
+					button="Clear"
 					title="Sure you want to do this?"
 					description="This action will delete all tasks"
-					action={deleteAllTasks}
-				>
-					<Button
-						className="w-31 h-8.5 text-[18px] text-neutral-400 bg-transparent border-1
-               border-border"
-					>
-						Clear
-					</Button>
-				</ConfirmationAlert>
+					callback={deleteAllTasks}
+					className="w-31 h-8.5 text-[18px] text-neutral-400 bg-transparent border-1 
+               rounded-md data-active:scale-95"
+				/>
 
 				<Button
-					className="w-31 h-8.5 text-[18px] text-white"
+					className="w-31 h-8.5 rounded-md data-active:scale-95 text-[18px] text-white"
 					style={{ backgroundColor: primary }}
 					onClick={createTask}
 				>
