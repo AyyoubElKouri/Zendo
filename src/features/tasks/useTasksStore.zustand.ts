@@ -3,11 +3,10 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
+import type { Task } from "@features-tasks/Task.entity";
 import { create } from "zustand";
 
-import type { Task } from "@/types/entities";
-
-export interface TaskState {
+export interface TaskStore {
 	/**
 	 * List of all tasks.
 	 * The order in this array defines the natural order.
@@ -47,7 +46,7 @@ export interface TaskState {
 	getTaskById: (id: number) => Task | undefined;
 }
 
-export const useTasksState = create<TaskState>((set, get) => ({
+export const useTasksStore = create<TaskStore>((set, get) => ({
 	tasks: [],
 
 	addTask: (task: Task, position?: number): void => {

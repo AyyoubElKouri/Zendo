@@ -6,9 +6,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { TasksPage } from "@features/tasks/pages/TasksPage";
+import { TasksPage } from "@features-tasks/Tasks.page";
 
-import "@shared/globals.css";
+import "./globals.css";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>

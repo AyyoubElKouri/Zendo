@@ -26,7 +26,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"@shared/*": ["./src/shared/*"],
-			"@features/*": ["./src/features/*"]
+			"@features-tasks/*": ["./src/features/tasks/*"]
 		}
 	},
 	"include": ["src"]

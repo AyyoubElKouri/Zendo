@@ -3,14 +3,14 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { clsx } from "clsx";
-import { Button, Input } from "@headlessui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Button, Input } from "@headlessui/react";
+import { clsx } from "clsx";
 
-import { DeleteIcon, DuplicateIcon, ConfirmationButton } from "@shared/components";
+import { ConfirmationButton, DeleteIcon, DuplicateIcon } from "@shared/components";
 import { useAccentColor } from "@shared/hooks";
 
-import { useTasks } from "@features/tasks/hooks/useTasks";
+import { useTasks } from "@features-tasks/useTasks.hook";
 
 export function TaskItem({ id }: { id: number }) {
 	const { primary, secondary } = useAccentColor();

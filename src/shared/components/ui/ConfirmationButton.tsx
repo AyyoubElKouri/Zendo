@@ -5,6 +5,7 @@
 
 import { useState } from "react";
 import { Button, Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
+
 import { useAccentColor } from "@shared/hooks";
 
 interface ConfirmationAlertProps {
@@ -31,8 +32,7 @@ export function ConfirmationButton({
 	return (
 		<>
 			<Button className={className} onClick={open}>
-				{" "}
-				{button}{" "}
+				{button}
 			</Button>
 
 			<Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none" onClose={close}>

@@ -4,15 +4,17 @@
  *------------------------------------------------------------------------------------------------*/
 
 import { useEffect, useRef } from "react";
-import { ActionBarWithQuote } from "@features/tasks/components/ActionBarWithQuote";
-import { Footer } from "@shared/components";
-import { Header } from "@shared/components";
-import { Statistics } from "@features/tasks/components/Statistics";
-import { TaskList } from "@features/tasks/components/TaskList";
-import { useTasks } from "@features/tasks/hooks/useTasks";
+
+import { Footer, Header } from "@shared/components";
 import { useToast } from "@shared/hooks";
 
-export function TasksPage() {
+import { ActionBarWithQuote } from "@features-tasks/components/ActionBarWithQuote";
+import { Statistics } from "@features-tasks/components/Statistics";
+import { TaskList } from "@features-tasks/components/TaskList";
+import { useTasks } from "@features-tasks/useTasks.hook";
+
+// Internel hook
+function useLoadTasks() {
 	const { tasksState, repository } = useTasks();
 	const { toast } = useToast();
 	const loadedRef = useRef(false);
@@ -31,6 +33,10 @@ export function TasksPage() {
 			error instanceof Error && toast.error(error.message);
 		}
 	}, [repository.findAllTasks, tasksState.addTask, toast.error]);
+}
+
+export function TasksPage() {
+	useLoadTasks();
 
 	return (
 		<div

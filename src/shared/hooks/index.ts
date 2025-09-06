@@ -3,5 +3,5 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-export { useAccentColor, type AccentColorType } from "./useAccentColor";
+export { type AccentColorType, useAccentColor } from "./useAccentColor";
 export { useToast } from "./useToast";

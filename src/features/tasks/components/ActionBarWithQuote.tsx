@@ -5,22 +5,27 @@
 
 import { Button } from "@headlessui/react";
 
-import { ErrorIcon, QuoteIcon, SuccessIcon, ConfirmationButton } from "@shared/components";
-import { useAccentColor } from "@shared/hooks";
-import { useToast } from "@shared/hooks";
+import { ConfirmationButton, ErrorIcon, QuoteIcon, SuccessIcon } from "@shared/components";
 import { QUOTES } from "@shared/constants";
+import { useAccentColor, useToast } from "@shared/hooks";
 
-import { useTasks } from "@features/tasks/hooks/useTasks";
+import { useTasks } from "@features-tasks/useTasks.hook";
+
+// Helper
+function getRandomQuote() {
+	return QUOTES[Math.floor(Math.random() * QUOTES.length)];
+}
 
 export function ActionBarWithQuote() {
 	const { createTask, deleteAllTasks } = useTasks();
 	const { primary } = useAccentColor();
 	const { toast } = useToast();
 
-	// Get a random quote
-	const quote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+	const quote = getRandomQuote();
 
 	const message = toast.message ?? quote;
+
+	// Icon for the propriete message
 	const icon = !toast.type ? (
 		<QuoteIcon />
 	) : toast.type === "success" ? (

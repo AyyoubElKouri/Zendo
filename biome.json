@@ -6,7 +6,8 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": ["src/**"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -15,6 +16,7 @@
 	},
 	"linter": {
 		"enabled": true,
+		"includes": ["src/**"],
 		"rules": {
 			"recommended": true,
 			"style": {
@@ -35,7 +37,21 @@
 		"enabled": true,
 		"actions": {
 			"source": {
-				"organizeImports": "off"
+				"organizeImports": {
+					"level": "on",
+					"options": {
+						"groups": [
+							["react", "react-dom", "react/**", "react-dom/**"],
+							["lucide-react"],
+							["@headlessui", "@headlessui/**"],
+							["clsx", "zod"],
+							":BLANK_LINE:",
+							["@shared/**"],
+							":BLANK_LINE:",
+							["@features-*/**"]
+						]
+					}
+				}
 			}
 		}
 	}

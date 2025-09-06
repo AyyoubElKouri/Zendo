@@ -4,15 +4,17 @@
  *------------------------------------------------------------------------------------------------*/
 
 import { useMemo } from "react";
+
 import { useToast } from "@shared/hooks";
-import { TaskRepository } from "@features/tasks/services/TaskRepository";
-import { useTasksState } from "@features/tasks/store/useTasksState";
-import type { Task } from "@features/tasks/entities";
+
+import type { Task } from "@features-tasks/Task.entity";
+import { TaskRepository } from "@features-tasks/TaskRepository.persistence";
+import { useTasksStore } from "@features-tasks/useTasksStore.zustand";
 
 export function useTasks() {
 	// Dependencies
 	const repository = useMemo(() => new TaskRepository(), []);
-	const tasksState = useTasksState();
+	const tasksState = useTasksStore();
 	const { toast } = useToast();
 
 	// Operations
@@ -75,18 +77,18 @@ export function useTasks() {
 	}
 
 	function duplicateTask(id: number, taskToDuplicate: Task) {
+		// we need to find the index of the current task, to add the new task juste after it.
+		const tasks = tasksState.getAllTasks();
+		const index = tasks.findIndex((task) => task.id === id) ?? tasks.length - 1;
+
+		const defaultTask: Task = {
+			id: Date.now(),
+			source: taskToDuplicate.source,
+			description: taskToDuplicate.description,
+			completed: false,
+		};
+
 		try {
-			// we need to find the index of the current task, to add the new task juste after it.
-			const tasks = tasksState.getAllTasks();
-			const index = tasks.findIndex((task) => task.id === id) ?? tasks.length - 1;
-
-			const defaultTask: Task = {
-				id: Date.now(),
-				source: taskToDuplicate.source,
-				description: taskToDuplicate.description,
-				completed: false,
-			};
-
 			repository.addTask(defaultTask, index + 1);
 			tasksState.addTask(defaultTask, index + 1);
 
@@ -105,8 +107,8 @@ export function useTasks() {
 				throw new Error(`Task with ID ${id} not found`);
 			}
 
-			tasksState.updateTask(id, { completed: !task.completed });
 			repository.updateTask(id, { completed: !task.completed });
+			tasksState.updateTask(id, { completed: !task.completed });
 
 			toast.success(task.completed ? "Task finished Successfuly" : "Task not finished");
 		} catch (error: unknown) {
