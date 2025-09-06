@@ -11,7 +11,7 @@ import { useToast } from "@shared/hooks";
 import { ActionBarWithQuote } from "@features-tasks/components/ActionBarWithQuote";
 import { Statistics } from "@features-tasks/components/Statistics";
 import { TaskList } from "@features-tasks/components/TaskList";
-import { useTasks } from "@features-tasks/useTasks.hook";
+import { useTasks } from "@features-tasks/useTasks";
 
 // Internel hook
 function useLoadTasks() {

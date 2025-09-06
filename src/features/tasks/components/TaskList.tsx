@@ -6,7 +6,7 @@
 import { useAccentColor } from "@shared/hooks";
 
 import { TaskItem } from "@features-tasks/components/TaskItem";
-import { useTasks } from "@features-tasks/useTasks.hook";
+import { useTasks } from "@features-tasks/useTasks";
 
 export function TaskList() {
 	const { primary, secondary } = useAccentColor();

@@ -10,7 +10,7 @@ import { clsx } from "clsx";
 import { ConfirmationButton, DeleteIcon, DuplicateIcon } from "@shared/components";
 import { useAccentColor } from "@shared/hooks";
 
-import { useTasks } from "@features-tasks/useTasks.hook";
+import { useTasks } from "@features-tasks/useTasks";
 
 export function TaskItem({ id }: { id: number }) {
 	const { primary, secondary } = useAccentColor();

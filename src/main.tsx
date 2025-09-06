@@ -6,7 +6,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { TasksPage } from "@features-tasks/Tasks.page";
+import { TasksPage } from "@features-tasks/TasksPage";
 
 import "./globals.css";
 

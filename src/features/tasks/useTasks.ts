@@ -8,8 +8,8 @@ import { useMemo } from "react";
 import { useToast } from "@shared/hooks";
 
 import type { Task } from "@features-tasks/Task.entity";
-import { TaskRepository } from "@features-tasks/TaskRepository.persistence";
-import { useTasksStore } from "@features-tasks/useTasksStore.zustand";
+import { TaskRepository } from "@features-tasks/TaskRepository";
+import { useTasksStore } from "@features-tasks/useTasksStore";
 
 export function useTasks() {
 	// Dependencies

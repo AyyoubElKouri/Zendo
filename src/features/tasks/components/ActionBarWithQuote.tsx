@@ -9,7 +9,7 @@ import { ConfirmationButton, ErrorIcon, QuoteIcon, SuccessIcon } from "@shared/c
 import { QUOTES } from "@shared/constants";
 import { useAccentColor, useToast } from "@shared/hooks";
 
-import { useTasks } from "@features-tasks/useTasks.hook";
+import { useTasks } from "@features-tasks/useTasks";
 
 // Helper
 function getRandomQuote() {
