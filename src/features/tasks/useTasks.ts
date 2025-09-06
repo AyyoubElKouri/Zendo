@@ -7,7 +7,7 @@ import { useMemo } from "react";
 
 import { useToast } from "@shared/hooks";
 
-import type { Task } from "@features-tasks/Task.entity";
+import type { Task } from "@features-tasks/Task";
 import { TaskRepository } from "@features-tasks/TaskRepository";
 import { useTasksStore } from "@features-tasks/useTasksStore";
 

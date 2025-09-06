@@ -3,7 +3,7 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import type { Task } from "@features-tasks/Task.entity";
+import type { Task } from "@features-tasks/Task";
 import { create } from "zustand";
 
 export interface TaskStore {

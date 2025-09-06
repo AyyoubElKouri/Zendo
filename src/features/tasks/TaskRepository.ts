@@ -5,7 +5,7 @@
 
 import { z } from "zod";
 
-import type { Task } from "@features-tasks/Task.entity";
+import type { Task } from "@features-tasks/Task";
 
 export class TaskRepository {
 	private readonly STORAGE_KEY_TASKS = "__tasks__key__";
