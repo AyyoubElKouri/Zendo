@@ -3,14 +3,13 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-export type Group = "DEFAULT" | "GREEN" | "BLUE" | "RED" | "YELLOW";
+export const formatDuration = (duration: number): string => {
+	if (duration < 60) {
+		return `${duration}min`;
+	}
 
-export interface Task {
-	id: number;
-	source: string;
-	description: string;
-	duration: number;
-	startTime?: number;
-	isCompleted: boolean;
-	group: Group;
-}
+	const hours = Math.floor(duration / 60);
+	const minutes = duration % 60;
+
+	return minutes === 0 ? `${hours}h` : `${hours}h${minutes}`;
+};

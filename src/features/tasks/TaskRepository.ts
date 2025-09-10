@@ -26,7 +26,16 @@ export class TaskRepository {
 			.min(1, "Description cannot be empty")
 			.max(70, "Description must not exceed 70 characters"),
 
-		completed: z.boolean(),
+		duration: z
+			.number("Duration Must be an number")
+			.min(0, "Duration must be positive")
+			.max(600, "Duration must not exceed 600 minutes"),
+
+		startTime: z.number().optional(),
+
+		isCompleted: z.boolean(),
+
+		group: z.enum(["DEFAULT", "GREEN", "BLUE", "RED", "YELLOW"]),
 	});
 
 	private static readonly UpdateTaskSchema = TaskRepository.AddTaskSchema.partial();
@@ -88,7 +97,7 @@ export class TaskRepository {
 		}
 	}
 
-	public addTask(task: Task, position?: number): Task {
+	public addTask(task: Task): Task {
 		// Validate task input
 		const results = TaskRepository.AddTaskSchema.safeParse(task);
 		if (!results.success) {
@@ -104,13 +113,7 @@ export class TaskRepository {
 			throw new Error(`Task with ID ${validatedTask.id} already exists`);
 		}
 
-		// Add task at the desired position, or push at the end if position is undefined/out of range
-		if (position !== undefined && position >= 0 && position <= tasks.length) {
-			tasks.splice(position, 0, validatedTask);
-		} else {
-			tasks.push(validatedTask);
-		}
-
+		tasks.push(task);
 		this.saveTasks(tasks);
 
 		return validatedTask;
@@ -134,7 +137,6 @@ export class TaskRepository {
 		}
 
 		const updatedTask = { ...tasks[taskIndex], ...validatedUpdates, id }; // Preserve original ID
-
 		// Validate the complete updated task
 		const finalValidation = TaskRepository.AddTaskSchema.safeParse(updatedTask);
 		if (!finalValidation.success) {
@@ -144,6 +146,8 @@ export class TaskRepository {
 
 		tasks[taskIndex] = finalValidation.data;
 		this.saveTasks(tasks);
+
+		console.log(tasks[taskIndex]);
 
 		return finalValidation.data;
 	}
@@ -177,5 +181,69 @@ export class TaskRepository {
 	public countTasks(): number {
 		const tasks = this.loadTasks();
 		return tasks.length;
+	}
+
+	public upTask(id: number): void {
+		const tasks = this.loadTasks();
+		const taskIndex = tasks.findIndex((task) => task.id === id);
+
+		if (taskIndex === -1) {
+			throw new Error(`Task with ID ${id} not found`);
+		}
+
+		if (taskIndex === 0) {
+			throw new Error(`Task with ID ${id} is already at the top`);
+		}
+
+		// Swap with previous task
+		[tasks[taskIndex - 1], tasks[taskIndex]] = [tasks[taskIndex], tasks[taskIndex - 1]];
+		this.saveTasks(tasks);
+	}
+
+	public downTask(id: number): void {
+		const tasks = this.loadTasks();
+		const taskIndex = tasks.findIndex((task) => task.id === id);
+
+		if (taskIndex === -1) {
+			throw new Error(`Task with ID ${id} not found`);
+		}
+
+		if (taskIndex === tasks.length - 1) {
+			throw new Error(`Task with ID ${id} is already at the bottom`);
+		}
+
+		// Swap with next task
+		[tasks[taskIndex], tasks[taskIndex + 1]] = [tasks[taskIndex + 1], tasks[taskIndex]];
+		this.saveTasks(tasks);
+	}
+
+	public duplicateTask(id: number): Task {
+		const tasks = this.loadTasks();
+		const taskIndex = tasks.findIndex((task) => task.id === id);
+
+		if (taskIndex === -1) {
+			throw new Error(`Task with ID ${id} not found`);
+		}
+
+		const originalTask = tasks[taskIndex];
+
+		// Create a duplicate with a new unique ID
+		const duplicatedTask: Task = {
+			...originalTask,
+			id: Date.now(), // Generate new unique ID using timestamp
+		};
+
+		// Validate the duplicated task
+		const validation = TaskRepository.AddTaskSchema.safeParse(duplicatedTask);
+		if (!validation.success) {
+			const firstError = validation.error.issues[0].message;
+			throw new Error(`Failed to duplicate task: ${firstError}`);
+		}
+
+		// Insert the duplicate right after the original task
+		tasks.splice(taskIndex + 1, 0, validation.data);
+		this.saveTasks(tasks);
+
+		return validation.data;
 	}
 }

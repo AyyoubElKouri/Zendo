@@ -10,8 +10,31 @@ import { TasksPage } from "@features-tasks/TasksPage";
 
 import "./globals.css";
 
+import { MainLayout } from "@shared/components/layout/MainLayout";
+
+import { createHashRouter, RouterProvider } from "react-router-dom";
+
+function Calender() {
+	return (
+		<div className="w-full h-full bg-amber-200 text-3xl text-amber-800 flex justify-center items-center">
+			hello Ayyoub
+		</div>
+	);
+}
+
+const router = createHashRouter([
+	{
+		path: "/",
+		element: <MainLayout />,
+		children: [
+			{ path: "/", element: <TasksPage /> },
+			{ path: "/calender", element: <Calender /> },
+		],
+	},
+]);
+
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<TasksPage />
+		<RouterProvider router={router} />
 	</StrictMode>,
 );
