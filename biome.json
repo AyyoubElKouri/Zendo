@@ -42,6 +42,7 @@
 					"options": {
 						"groups": [
 							["react", "react-dom", "react/**", "react-dom/**"],
+							["react-router-dom/**"],
 							["lucide-react"],
 							["@headlessui", "@headlessui/**"],
 							["clsx", "zod"],
