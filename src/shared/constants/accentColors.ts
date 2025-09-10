@@ -45,9 +45,4 @@ export const ACCENT_COLORS = {
 		primary: "#14b8a6",
 		secondary: "#134e4a",
 	},
-
-	red: {
-		primary: "#ef4444",
-		secondary: "#7f1d1d",
-	},
 };
