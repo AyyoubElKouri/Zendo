@@ -3,142 +3,126 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Button, Input } from "@headlessui/react";
-import { clsx } from "clsx";
+import { useCallback, useState } from "react";
+import { Button } from "@headlessui/react";
 
-import { ConfirmationButton, DeleteIcon, DuplicateIcon } from "@shared/components";
-import { useAccentColor } from "@shared/hooks";
+import { TaskGroupColors } from "@features-tasks/taskGroupColors";
+import { TaskInput } from "./TaskInput";
+import "@features-tasks/tasks.css";
 
+import { CompletedIcon, PendingIcon } from "@shared/components/icons";
+
+import { formatDuration } from "@features-tasks/formatDuration";
+import { useSelectedTaskStore } from "@features-tasks/useSelectedTaskStore";
 import { useTasks } from "@features-tasks/useTasks";
 
 export function TaskItem({ id }: { id: number }) {
-	const { primary, secondary } = useAccentColor();
-	const { tasksState, toggleTask } = useTasks();
+	const [isEditMode, setIsEditMode] = useState<"source" | "description" | "startTime" | null>(null);
+	const { id: selectedId, setSelectedTaskId } = useSelectedTaskStore();
+	const { updateTask, state } = useTasks();
 
-	const task = tasksState.getTaskById(id)!;
+	const task = state.getTaskById(id)!;
 
-	const handleToggle = useCallback(() => toggleTask(id), [id, toggleTask]);
+	const { primary, border, background1, background2, completed } = TaskGroupColors[task.group];
+
+	const select = useCallback(() => {
+		selectedId === id ? setSelectedTaskId(undefined) : setSelectedTaskId(id);
+	}, [id, setSelectedTaskId, selectedId]);
+
+	const enterEditMode = useCallback(
+		(field: "source" | "description" | "startTime") => {
+			if (task.isCompleted) return;
+
+			setSelectedTaskId(undefined);
+			setIsEditMode(field);
+		},
+		[setSelectedTaskId, task.isCompleted],
+	);
 
 	return (
 		<div
-			className="w-full h-12.5 min-h-12.5 bg-black border-1 border-border rounded-small grid
-                    grid-cols-[34px_34px_223px_560px_1fr]"
-		>
-			<ActionButton id={id} type="delete" />
-			<ActionButton id={id} type="duplicate" />
+			className="max-w-245 min-h-16.5 rounded-[8px] flex mr-7"
+			// Styling based on the task group.
+			style={
+				task.isCompleted
+					? {
+							backgroundColor: background1,
+							border: `1px solid ${id === selectedId ? primary : border}`,
+							backgroundImage: `
+                                       repeating-linear-gradient(
+                                                45deg,
+                                                ${completed},
+                                                ${completed} 2px,
+                                                transparent 2px,
+                                                transparent 4px
+                                             ),
 
-			<TaskItemField id={id} type="source" />
-			<TaskItemField id={id} type="description" />
+                                       repeating-linear-gradient(
+                                                -45deg,
+                                                ${completed},
+                                                ${completed} 2px,
+                                                transparent 2px,
+                                                transparent 4px
+                                             )`,
+						}
+					: {
+							backgroundColor: background1,
+							border: `1px solid ${id === selectedId ? primary : border}`,
+						}
+			}
+		>
+			{/** biome-ignore lint/a11y/noStaticElementInteractions: <no accessibily needed here> */}
+			{/** biome-ignore lint/a11y/useKeyWithClickEvents: <> */}
+			<div className="relative w-full h-full flex flex-col justify-center pl-3" onClick={select}>
+				{isEditMode ? (
+					<TaskInput id={id} type={isEditMode} setIsEditMode={setIsEditMode} />
+				) : (
+					<div className="flex flex-col pl-0.25 items-start justify-center">
+						<Button
+							className="text-[20px] font-medium text-[#E3E3E3]"
+							onDoubleClick={() => enterEditMode("source")}
+						>
+							{task.source}
+						</Button>
+						<Button
+							className="text-[16px] text-[#AFAFAF]"
+							onDoubleClick={() => enterEditMode("description")}
+						>
+							{task.description}
+						</Button>
+					</div>
+				)}
+
+				{/* startTime field */}
+				{task.startTime && !isEditMode && (
+					<Button
+						onDoubleClick={() => enterEditMode("startTime")}
+						className="absolute w-23 h-6.5 text-[16px] font-medium startTime
+                             rounded-b-[8px] top-0 bottom-0 right-8.5 flex justify-center items-center"
+						style={
+							{
+								"--bg": background2,
+								"--br": border,
+								"--primary": primary,
+							} as React.CSSProperties
+						}
+					>
+						{formatDuration(task.startTime)}
+					</Button>
+				)}
+			</div>
 
 			<Button
-				className="m-2.5 rounded-[8px] text-medium font-medium text-white active:scale-95"
-				onClick={handleToggle}
-				style={{ backgroundColor: task.completed ? secondary : primary }}
+				className="w-10 h-full flex justify-center items-center
+                       data-active:scale-95"
+				style={{
+					borderLeft: `1px solid ${border}`,
+				}}
+				type="button"
+				onClick={() => updateTask(id, { isCompleted: !task?.isCompleted })}
 			>
-				{task.completed ? "Finished" : "Pending"}
+				{task?.isCompleted ? <CompletedIcon /> : <PendingIcon />}
 			</Button>
 		</div>
-	);
-}
-
-/* ------------------------------------ Internel Components ------------------------------------- */
-
-function ActionButton({ id, type }: { id: number; type: "delete" | "duplicate" }) {
-	const { tasksState, deleteTask, duplicateTask } = useTasks();
-
-	const taskToBeCopied = tasksState.getTaskById(id)!;
-
-	const handleDelete = useCallback(() => deleteTask(id), [id, deleteTask]);
-	const handleDuplicate = useCallback(
-		() => duplicateTask(id, taskToBeCopied),
-		[id, duplicateTask, taskToBeCopied],
-	);
-
-	const button = (
-		<Button
-			onClick={type === "duplicate" ? handleDuplicate : undefined}
-			className={clsx(
-				"w-8.5 h-full gap-0 rounded-none bg-transparent border-r-1 border-border",
-				"flex justify-center items-center hover:bg-neutral-900 active:scale-95",
-				type === "delete" && "hover:rounded-l-small",
-			)}
-		>
-			{type === "delete" ? <DeleteIcon /> : <DuplicateIcon />}
-		</Button>
-	);
-
-	return type === "delete" ? (
-		<ConfirmationButton
-			button={<DeleteIcon />}
-			title="Sure you want to do this?"
-			description="this action will delete this task"
-			callback={handleDelete}
-			className="w-8.5 h-full gap-0 rounded-none bg-transparent border-r-1 border-border flex 
-                   justify-center items-center hover:bg-neutral-900 active:scale-95 hover:rounded-l-small"
-		/>
-	) : (
-		<div>{button}</div>
-	);
-}
-
-function TaskItemField({ id, type }: { id: number; type: "source" | "description" }) {
-	// Indicate if we are in edit mode
-	const [isEditMode, setIsEditMode] = useState<boolean>(false);
-	// Store a temporary value that will be stored later
-	const [tempValue, setTempValue] = useState<string>("");
-
-	// AutoFocus
-	const inputRef = useRef<HTMLInputElement>(null);
-	useEffect(() => {
-		if (isEditMode) {
-			inputRef.current?.focus();
-		}
-	}, [isEditMode]);
-
-	const { tasksState, updateTask } = useTasks();
-	const task = tasksState.getTaskById(id)!;
-
-	// Wen user click outside of the input or presse `Enter` key, we exit the edit mode
-	function exitEditMode() {
-		const sanitizedValue = tempValue.trim();
-
-		if (sanitizedValue !== task[type]) {
-			updateTask(id, { [type]: sanitizedValue });
-		}
-
-		setTempValue("");
-		setIsEditMode(false);
-	}
-
-	return isEditMode ? (
-		<div className="w-full h-full p-2.5 border-r-1 border-border">
-			<Input
-				type="text"
-				value={tempValue}
-				spellCheck={false}
-				ref={inputRef}
-				onChange={(event) => setTempValue(event.target.value)}
-				onBlur={exitEditMode}
-				onKeyDown={(event) => event.key === "Enter" && exitEditMode()}
-				className="w-full text-neutral-300 pl-[13px] rounded-[8px] bg-neutral-950 border
-                       border-border focus:outline-none"
-			/>
-		</div>
-	) : (
-		<Button
-			onDoubleClick={() => {
-				setTempValue(task[type]);
-				setIsEditMode(true);
-			}}
-			className={clsx(
-				"w-full h-full flex justify-start items-center pl-6 text-medium font-medium",
-				type === "source"
-					? "font-medium text-neutral-300 border-r-1 border-border"
-					: "text-neutral-400 font-normal",
-			)}
-		>
-			{task[type]}
-		</Button>
 	);
 }
