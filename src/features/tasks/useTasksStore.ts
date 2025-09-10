@@ -3,89 +3,109 @@
  *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
  *------------------------------------------------------------------------------------------------*/
 
-import type { Task } from "@features-tasks/Task";
+import type { Group, Task } from "@features-tasks/Task";
 import { create } from "zustand";
 
-export interface TaskStore {
-	/**
-	 * List of all tasks.
-	 * The order in this array defines the natural order.
-	 */
+export interface TasksStore {
 	tasks: Task[];
 
-	/**
-	 * Add a new task to the list.
-	 * If `position` is provided, insert at that index.
-	 * Otherwise, append at the end.
-	 */
-	addTask: (task: Task, position?: number) => void;
-
-	/**
-	 * Update an existing task by its ID.
-	 */
+	addTask: (task: Task) => void;
 	updateTask: (id: number, updated: Partial<Task>) => void;
-
-	/**
-	 * Remove a task from the list by its ID.
-	 */
 	deleteTask: (id: number) => void;
-
-	/**
-	 * Remove a task from the list by its ID.
-	 */
 	deleteAllTasks: () => void;
-
-	/**
-	 * Return all tasks in natural order.
-	 */
-	getAllTasks: () => Task[];
-
-	/**
-	 * Return a specific task by its ID.
-	 */
+	changeTaskGroup: (id: number, group: Group) => void;
+	duplicateTask: (id: number) => void;
+	upTask: (id: number) => void;
+	downTask: (id: number) => void;
+	setStartTime: (id: number, time: number | undefined) => void;
 	getTaskById: (id: number) => Task | undefined;
+	getAllTasks: () => Task[];
 }
 
-export const useTasksStore = create<TaskStore>((set, get) => ({
+export const useTasksStore = create<TasksStore>((set, get) => ({
 	tasks: [],
 
-	addTask: (task: Task, position?: number): void => {
-		set((state) => {
-			const newTasks = [...state.tasks];
-
-			if (position !== undefined && position >= 0 && position <= newTasks.length) {
-				newTasks.splice(position, 0, task);
-			} else {
-				newTasks.push(task);
-			}
-
-			return { tasks: newTasks };
-		});
+	addTask: (task: Task) => {
+		set((state) => ({
+			tasks: [...state.tasks, task],
+		}));
 	},
 
-	updateTask: (id: number, updated: Partial<Task>): void => {
+	updateTask: (id: number, updated: Partial<Task>) => {
 		set((state) => ({
 			tasks: state.tasks.map((task) => (task.id === id ? { ...task, ...updated } : task)),
 		}));
 	},
 
-	deleteTask: (id: number): void => {
+	deleteTask: (id: number) => {
 		set((state) => ({
 			tasks: state.tasks.filter((task) => task.id !== id),
 		}));
 	},
 
-	deleteAllTasks: (): void => {
+	deleteAllTasks: () => {
 		set(() => ({
 			tasks: [],
 		}));
 	},
 
-	getAllTasks: (): Task[] => {
-		return get().tasks;
+	changeTaskGroup: (id: number, group: Group) => {
+		set((state) => ({
+			tasks: state.tasks.map((task) => (task.id === id ? { ...task, group } : task)),
+		}));
+	},
+
+	duplicateTask: (id: number) => {
+		set((state) => {
+			const index = state.tasks.findIndex((task) => task.id === id);
+			if (index === -1) return state;
+
+			const original = state.tasks[index];
+			const copy: Task = {
+				...original,
+				id: Date.now(),
+			};
+
+			const newTasks = [...state.tasks];
+			newTasks.splice(index + 1, 0, copy);
+
+			return { tasks: newTasks };
+		});
+	},
+
+	upTask: (id: number) => {
+		set((state) => {
+			const index = state.tasks.findIndex((task) => task.id === id);
+			if (index <= 0) return state;
+
+			const newTasks = [...state.tasks];
+			[newTasks[index - 1], newTasks[index]] = [newTasks[index], newTasks[index - 1]];
+			return { tasks: newTasks };
+		});
+	},
+
+	downTask: (id: number) => {
+		set((state) => {
+			const index = state.tasks.findIndex((task) => task.id === id);
+			if (index === -1 || index >= state.tasks.length - 1) return state;
+
+			const newTasks = [...state.tasks];
+			[newTasks[index], newTasks[index + 1]] = [newTasks[index + 1], newTasks[index]];
+			return { tasks: newTasks };
+		});
+	},
+
+	setStartTime: (id: number, time: number | undefined) => {
+		set((state) => ({
+			tasks: state.tasks.map((task) => (task.id === id ? { ...task, startTime: time } : task)),
+		}));
 	},
 
 	getTaskById: (id: number): Task | undefined => {
 		return get().tasks.find((task) => task.id === id);
+	},
+
+	getAllTasks: (): Task[] => {
+		return get().tasks;
 	},
 }));

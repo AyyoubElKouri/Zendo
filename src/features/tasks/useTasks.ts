@@ -9,27 +9,31 @@ import { useToast } from "@shared/hooks";
 
 import type { Task } from "@features-tasks/Task";
 import { TaskRepository } from "@features-tasks/TaskRepository";
+import { useSelectedTaskStore } from "@features-tasks/useSelectedTaskStore";
 import { useTasksStore } from "@features-tasks/useTasksStore";
 
 export function useTasks() {
 	// Dependencies
 	const repository = useMemo(() => new TaskRepository(), []);
-	const tasksState = useTasksStore();
+	const state = useTasksStore();
+	const { setSelectedTaskId } = useSelectedTaskStore();
 	const { toast } = useToast();
 
 	// Operations
 	function createTask() {
 		// Default values
-		const defaultTask: Task = {
+		const defaultValues: Task = {
 			id: Date.now(),
 			source: "Default Source",
 			description: "Default Description",
-			completed: false,
+			duration: 0,
+			isCompleted: false,
+			group: "DEFAULT",
 		};
 
 		try {
-			repository.addTask(defaultTask);
-			tasksState.addTask(defaultTask);
+			repository.addTask(defaultValues);
+			state.addTask(defaultValues);
 
 			toast.success("Task added successfuly");
 		} catch (error: unknown) {
@@ -42,7 +46,7 @@ export function useTasks() {
 	function updateTask(id: number, updates: Partial<Task>) {
 		try {
 			repository.updateTask(id, updates);
-			tasksState.updateTask(id, updates);
+			state.updateTask(id, updates);
 
 			toast.success("Task updated successfuly");
 		} catch (error: unknown) {
@@ -53,7 +57,9 @@ export function useTasks() {
 	function deleteTask(id: number) {
 		try {
 			repository.deleteTask(id);
-			tasksState.deleteTask(id);
+			state.deleteTask(id);
+
+			setSelectedTaskId(undefined);
 
 			toast.success("Task removed successfuly");
 		} catch (error: unknown) {
@@ -66,7 +72,7 @@ export function useTasks() {
 	function deleteAllTasks() {
 		try {
 			repository.deleteAllTasks();
-			tasksState.deleteAllTasks();
+			state.deleteAllTasks();
 
 			toast.success("All tasks removed successfuly");
 		} catch (error: unknown) {
@@ -76,21 +82,10 @@ export function useTasks() {
 		}
 	}
 
-	function duplicateTask(id: number, taskToDuplicate: Task) {
-		// we need to find the index of the current task, to add the new task juste after it.
-		const tasks = tasksState.getAllTasks();
-		const index = tasks.findIndex((task) => task.id === id) ?? tasks.length - 1;
-
-		const defaultTask: Task = {
-			id: Date.now(),
-			source: taskToDuplicate.source,
-			description: taskToDuplicate.description,
-			completed: false,
-		};
-
+	function duplicateTask(id: number) {
 		try {
-			repository.addTask(defaultTask, index + 1);
-			tasksState.addTask(defaultTask, index + 1);
+			repository.duplicateTask(id);
+			state.duplicateTask(id);
 
 			toast.success("Task copied successfuly");
 		} catch (error: unknown) {
@@ -102,15 +97,15 @@ export function useTasks() {
 
 	function toggleTask(id: number) {
 		try {
-			const task = tasksState.getTaskById(id);
+			const task = state.getTaskById(id);
 			if (!task) {
 				throw new Error(`Task with ID ${id} not found`);
 			}
 
-			repository.updateTask(id, { completed: !task.completed });
-			tasksState.updateTask(id, { completed: !task.completed });
+			repository.updateTask(id, { isCompleted: !task.isCompleted });
+			state.updateTask(id, { isCompleted: !task.isCompleted });
 
-			toast.success(task.completed ? "Task finished Successfuly" : "Task not finished");
+			toast.success(task.isCompleted ? "Task finished Successfuly" : "Task not finished");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				toast.error(error.message);
@@ -118,18 +113,39 @@ export function useTasks() {
 		}
 	}
 
+	function upTask(id: number) {
+		try {
+			repository.upTask(id);
+			state.upTask(id);
+		} catch (error: unknown) {
+			error instanceof Error && toast.error(error.message);
+		}
+	}
+
+	function downTask(id: number) {
+		try {
+			repository.downTask(id);
+			state.downTask(id);
+		} catch (error: unknown) {
+			error instanceof Error && toast.error(error.message);
+		}
+	}
+
 	function getStatistics() {
-		const tasks = tasksState.getAllTasks();
+		const tasks = state.getAllTasks();
 
 		const allTasks = tasks.length;
-		const completedTasks = tasks.filter((task) => task.completed === true).length;
+		const completedTasks = tasks.filter((task) => task.isCompleted === true).length;
 		const rateOfCompletion =
 			allTasks > 0 ? ((completedTasks / allTasks) * 100).toFixed(0).concat("%") : "0%";
+
+		const duration = tasks.reduce((sum, task) => sum + task.duration, 0);
 
 		return {
 			allTasksNumber: allTasks,
 			completedTasksNumber: completedTasks,
 			rateOfCompletion,
+			duration,
 		};
 	}
 
@@ -140,8 +156,10 @@ export function useTasks() {
 		deleteAllTasks,
 		duplicateTask,
 		toggleTask,
+		upTask,
+		downTask,
 		getStatistics,
 		repository,
-		tasksState,
+		state,
 	};
 }

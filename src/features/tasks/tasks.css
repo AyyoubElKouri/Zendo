@@ -1,0 +1,22 @@
+/*--------------------------------------------------------------------------------------------------
+ *                       Copyright (c) Ayyoub EL Kouri. All rights reserved
+ *     Becoming an expert won’t happen overnight, but with a bit of patience, you’ll get there
+ *------------------------------------------------------------------------------------------------*/
+
+.startTime {
+	background-color: var(--bg);
+	border-left: 1px solid var(--br);
+	border-right: 1px solid var(--br);
+	border-bottom: 1px solid var(--br);
+}
+
+.task-list-css::-webkit-scrollbar {
+	background-color: #1f1f1f;
+	width: 8px;
+	border-radius: 9999px;
+}
+
+.task-list-css::-webkit-scrollbar-thumb {
+	background-color: var(--scroll);
+	border-radius: 9999px;
+}
