@@ -5,14 +5,12 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Input } from "@headlessui/react";
+import clsx from "clsx";
 
+import type { Task } from "@features-tasks/Task";
 import { useTasks } from "@features-tasks/useTasks";
 
-/**
- * @Helper extractDuration
- * @description recieve an string, if start with `59 min of ... ` return the number (59)
- *              else undefined
- */
+// Helper
 function extractDuration(input: string): number | undefined {
 	const regex = /^(\d+)\s*(minutes?|min|m)\s+of/i;
 
@@ -20,100 +18,108 @@ function extractDuration(input: string): number | undefined {
 	if (match) {
 		return Number(match[1]);
 	}
+
 	return undefined;
 }
 
-/**
- * @interface TaskInputProps
- * @description define the shape of data that TaskInput will recieve.
- *
- * @field id will be used to access zustand state to retrive task data.
- * @field type to specify the type of the input
- * @field onBlur or `Enter` key pressed, TaskInput need to have access to exit the edit mode
- */
+// Helper
+function getTimeString(time: string) {
+	const minutesTotal = Number(time);
+
+	if (!time || Number.isNaN(Number(time))) return "00:00";
+
+	const minutes = (minutesTotal % 60).toString().padStart(2, "0");
+	const hours = Math.floor(minutesTotal / 60)
+		.toString()
+		.padStart(2, "0");
+
+	return `${hours}:${minutes}`;
+}
+
+// Props
 interface TaskInputProps {
 	id: number;
 	type: "source" | "description" | "startTime";
 	setIsEditMode: (field: "source" | "description" | "startTime" | null) => void;
 }
 
-/**
- * @brief the input that will be rendered on edit mode.
- */
+// Component
 export function TaskInput({ id, type, setIsEditMode }: TaskInputProps) {
-	// Get data from global state
-	const { state, updateTask } = useTasks();
-	const task = state.getTaskById(id)!;
-
-	// temprary value
-	const [tempValue, setTempValue] = useState<string | number>(task[type]!);
-
-	// AutoFocus
+	// Hooks
+	const [tempValue, setTempValue] = useState<string>("");
 	const inputRef = useRef<HTMLInputElement>(null);
+	const { state, updateTask } = useTasks();
+
+	const isStartTime = type === "startTime";
+
 	useEffect(() => {
-		inputRef.current?.focus();
-	}, []);
-
-	// exit edit mode on user click outside the input or if they press `Enter`
-	const exitEditMode = useCallback(() => {
-		if (type === "startTime" && tempValue === 0) {
-			updateTask(id, { startTime: undefined });
-		} else if (type === "description") {
-			// If the description start with `50 minutes of ... ` pr `80 min of ... `, add this duration
-			// to the duration property of the task
-
-			const minutes = extractDuration(tempValue as string);
-			minutes
-				? updateTask(id, { description: tempValue as string, duration: minutes })
-				: updateTask(id, { description: tempValue as string });
-		} else {
-			updateTask(id, { [type]: tempValue });
+		const task = state.getTaskById(id);
+		if (!task) {
+			throw new Error("Task was not found");
 		}
 
+		setTempValue(String(task[type]));
+
+		inputRef.current?.focus();
+	}, [id, type, state]);
+
+	// Exit edit mode on user click outside the input or if they press `Enter`
+	const exitEditMode = useCallback(() => {
+		const updates: Partial<Task> = {};
+
+		switch (type) {
+			case "startTime": {
+				updates.startTime =
+					tempValue === "0" || tempValue === "NaN" ? undefined : Number(tempValue);
+				break;
+			}
+
+			case "source": {
+				updates.source = tempValue;
+				break;
+			}
+
+			case "description": {
+				updates.description = tempValue;
+				updates.duration = extractDuration(tempValue) ?? 0;
+				break;
+			}
+		}
+
+		updateTask(id, updates);
 		setIsEditMode(null);
 	}, [id, updateTask, type, setIsEditMode, tempValue]);
 
-	// Special handeling for startTime type
-	if (type === "startTime") {
-		// minutes → "HH:MM"
-		const minutesTotal = Number(tempValue);
-		const hours = Math.floor(minutesTotal / 60)
-			.toString()
-			.padStart(2, "0");
+	const handleChange = useCallback(
+		(value: string) => {
+			if (isStartTime) {
+				const [h, m] = value.split(":").map(Number);
 
-		const minutes = (minutesTotal % 60).toString().padStart(2, "0");
-		const timeString = `${hours}:${minutes}`;
+				setTempValue(String(h * 60 + m));
+				return;
+			}
 
-		return (
-			<Input
-				type="time"
-				value={timeString}
-				ref={inputRef}
-				onChange={(event) => {
-					const [h, m] = event.target.value.split(":").map(Number);
-					setTempValue(h * 60 + m); // "HH:MM" -> minutes
-				}}
-				onBlur={exitEditMode}
-				onKeyDown={(event) => event.key === "Enter" && exitEditMode()}
-				className="w-20 h-8 text-[18px] text-[#E3E3E3] pl-2 rounded-[8px] border border-border
-                       focus:outline-none appearance-none
-                       [&::-webkit-calendar-picker-indicator]:hidden"
-			/>
-		);
-	}
+			setTempValue(value);
+		},
+		[isStartTime],
+	);
 
-	// So the type is source or description.
 	return (
 		<Input
-			type="text"
-			value={tempValue}
+			type={isStartTime ? "time" : "text"}
+			value={isStartTime ? getTimeString(tempValue) : tempValue}
+			aria-label={`Update task ${type}`}
 			ref={inputRef}
 			spellCheck={false}
-			onChange={(event) => setTempValue(event.target.value)}
+			onChange={(event) => handleChange(event.target.value)}
 			onBlur={exitEditMode}
 			onKeyDown={(event) => event.key === "Enter" && exitEditMode()}
-			className="w-220 h-8 text-[18px] text-[#E3E3E3] pl-2 rounded-[8px] border border-border
-                    focus:outline-none"
+			className={clsx(
+				"h-8 text-[18px] text-[#E3E3E3] pl-2 rounded-[8px] border border-border",
+				"focus:outline-none",
+				isStartTime && "w-18 appearance-none [&::-webkit-calendar-picker-indicator]:hidden",
+				!isStartTime && "w-220",
+			)}
 		/>
 	);
 }
